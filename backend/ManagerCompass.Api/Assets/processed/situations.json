@@ -229,11 +229,12 @@
     "checkbox_tags": ["new_hire", "onboarding"],
     "keywords": ["new hire", "starting soon", "onboarding", "first day"],
     "steps": [
-      "US: once the candidate accepts their offer, Talent Acquisition moves them to 'Pre-Hire Screening Initiated-US.'",
-      "Talent Acquisition notifies Talent Services via Teams, who process onboarding within a 3-hour SLA.",
-      "PH: Talent Acquisition hands off after the onboarding discussion and PEME referral; Talent Services owns everything after.",
-      "Talent Services verifies job details, launches the onboarding packet, and monitors background check/I-9/E-Verify status.",
-      "Manager should confirm equipment, system access, and a first-week schedule are ready before day one — see also the New Manager / New Leader Toolkit for a broader first-30-days checklist."
+      "Confirm the new hire's start date is locked in, and make sure Talent Services has been notified.",
+      "US hires: Talent Services begins onboarding within 3 hours of the offer being accepted — check in if it's been longer.",
+      "PH hires: onboarding begins after your onboarding discussion and PEME referral with the candidate.",
+      "Talent Services handles the background check, I-9/E-Verify, and onboarding packet — no action needed from you there.",
+      "Your part: have equipment, system access, and a first-week schedule ready before day one.",
+      "New to managing yourself? Check the New Leader Toolkit for a fuller first-30-days checklist."
     ],
     "docs": [
       { "title": "Updated - US Onboarding Process Guide", "file": "/assets/raw/talent-services/US-Onboarding-Process-Guide.pdf" },

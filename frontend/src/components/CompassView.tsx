@@ -54,6 +54,14 @@ function classifyAnswer(rawInput: string): AnswerContent {
   return PERFORMANCE_ANSWER;
 }
 
+function renderStep(step: string) {
+  const match = step.match(/^([A-Za-z /]{2,25}):\s(.+)/);
+  if (match) {
+    return <><strong>{match[1]}:</strong> {match[2]}</>;
+  }
+  return step;
+}
+
 export function CompassView({ active, prefillToken, prefillText, onNavigateHome }: CompassViewProps) {
   const [inputValue, setInputValue] = useState('');
   const [localAnswer, setLocalAnswer] = useState<AnswerContent | null>(null);
@@ -304,10 +312,10 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
                     <div>
                       <h4>Manager-ready prep plan</h4>
                       <ul className="checklist">
-                        {guide.prepareSteps.map((step) => (
+                        {guide.prepareSteps.map((step, index) => (
                           <li key={step}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m5 12 4 4L19 6" /></svg>
-                            <span>{step}</span>
+                            <span className="checklist-num">{index + 2}</span>
+                            <span>{renderStep(step)}</span>
                           </li>
                         ))}
                       </ul>

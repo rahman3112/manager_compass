@@ -188,6 +188,7 @@ p { line-height: 1.55; }
 .checklist li { display: flex; gap: 11px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.4; }
 .checklist li:last-child { border-bottom: 0; }
 .checklist svg { width: 16px; flex: 0 0 auto; color: var(--aqua-deep); }
+.checklist-num { width: 20px; height: 20px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; background: var(--aqua-deep); color: #fff; font-size: 11px; font-weight: 800; }
 .route-box { padding: 16px; border-radius: 13px; background: var(--coral-pale); }
 .route-box strong { display: block; margin-bottom: 7px; color: var(--coral-deep); font-size: 13px; }
 .route-box p { margin: 0; color: #734d42; font-size: 12px; line-height: 1.45; }
