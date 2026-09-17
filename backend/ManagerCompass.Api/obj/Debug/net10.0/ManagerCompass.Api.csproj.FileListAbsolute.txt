@@ -32,3 +32,7 @@ C:\Users\MRahman1\Downloads\realpage_mc\backend\ManagerCompass.Api\obj\Debug\net
 C:\Users\MRahman1\Downloads\realpage_mc\backend\ManagerCompass.Api\obj\Debug\net10.0\ManagerCompass.Api.pdb
 C:\Users\MRahman1\Downloads\realpage_mc\backend\ManagerCompass.Api\obj\Debug\net10.0\ManagerCompass.Api.genruntimeconfig.cache
 C:\Users\MRahman1\Downloads\realpage_mc\backend\ManagerCompass.Api\obj\Debug\net10.0\ref\ManagerCompass.Api.dll
+C:\Users\MRahman1\Downloads\realpage_mc\backend\ManagerCompass.Api\bin\Debug\net10.0\Assets\processed\contacts.json
+C:\Users\MRahman1\Downloads\realpage_mc\backend\ManagerCompass.Api\bin\Debug\net10.0\Assets\processed\document_extracts.json
+C:\Users\MRahman1\Downloads\realpage_mc\backend\ManagerCompass.Api\bin\Debug\net10.0\Assets\processed\keywords.json
+C:\Users\MRahman1\Downloads\realpage_mc\backend\ManagerCompass.Api\bin\Debug\net10.0\Assets\processed\situations.json

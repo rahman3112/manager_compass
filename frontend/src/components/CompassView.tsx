@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { fetchCategories, generateGuide } from '../api/client';
+import { fetchCategories, fetchScenarios, generateGuide } from '../api/client';
 import type { Category } from '../types/category';
 import type { Guide } from '../types/guide';
+import type { Scenario } from '../types/scenario';
 
 interface CompassViewProps {
   active: boolean;
@@ -57,7 +58,9 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
   const [inputValue, setInputValue] = useState('');
   const [localAnswer, setLocalAnswer] = useState<AnswerContent | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [selectedScenarioIds, setSelectedScenarioIds] = useState<Set<string>>(new Set());
   const [guide, setGuide] = useState<Guide | null>(null);
   const [isLoadingGuide, setIsLoadingGuide] = useState(false);
   const [guideError, setGuideError] = useState<string | null>(null);
@@ -67,6 +70,7 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
 
   useEffect(() => {
     fetchCategories().then(setCategories).catch(() => setCategories([]));
+    fetchScenarios().then(setScenarios).catch(() => setScenarios([]));
   }, []);
 
   useEffect(() => {
@@ -78,6 +82,7 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
     setLocalAnswer(null);
     setGuide(null);
     setSelectedCategoryId(null);
+    setSelectedScenarioIds(new Set());
     const timer = setTimeout(() => textareaRef.current?.focus(), 380);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,43 +94,62 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
     }
   }, [guide, localAnswer]);
 
-  async function runGuideForCategory(category: Category, situation: string) {
+  const scenariosForCategory = scenarios.filter((s) => s.categoryId === selectedCategoryId);
+
+  function selectCategory(category: Category) {
     setSelectedCategoryId(category.id);
-    setInputValue(situation);
+    setSelectedScenarioIds(new Set());
+    setInputValue(category.defaultSituation);
+    setGuide(null);
     setLocalAnswer(null);
     setGuideError(null);
-    setIsLoadingGuide(true);
-    try {
-      const result = await generateGuide({ categoryId: category.id, situation });
-      setGuide(result);
-    } catch {
-      setGuideError('Could not reach Manager Compass to build a plan for that category. Please try again.');
-      setGuide(null);
-    } finally {
-      setIsLoadingGuide(false);
-    }
   }
 
-  async function handleShowFirstStep() {
+  function toggleScenario(scenario: Scenario, category: Category) {
+    const next = new Set(selectedScenarioIds);
+    if (next.has(scenario.id)) {
+      next.delete(scenario.id);
+    } else {
+      next.add(scenario.id);
+    }
+    setSelectedScenarioIds(next);
+
+    const picked = scenarios.filter((s) => next.has(s.id));
+    setInputValue(picked.length > 0 ? picked.map((s) => s.description).join(' ') : category.defaultSituation);
+    setGuide(null);
+  }
+
+  function handleChipClick(fill: string) {
+    setSelectedCategoryId(null);
+    setSelectedScenarioIds(new Set());
+    setGuide(null);
+    setInputValue(fill);
+  }
+
+  async function handlePreparePlan() {
     if (selectedCategoryId) {
-      const category = categories.find((c) => c.id === selectedCategoryId);
-      if (category) {
-        await runGuideForCategory(category, inputValue.trim() || category.defaultSituation);
-        return;
+      setGuideError(null);
+      setIsLoadingGuide(true);
+      try {
+        const result = await generateGuide({ categoryId: selectedCategoryId, situation: inputValue.trim() });
+        setGuide(result);
+        setLocalAnswer(null);
+      } catch {
+        setGuideError('Could not reach Manager Compass to build a plan for that category. Please try again.');
+        setGuide(null);
+      } finally {
+        setIsLoadingGuide(false);
       }
+      return;
     }
     setGuide(null);
     setLocalAnswer(classifyAnswer(inputValue));
   }
 
-  function handleChipClick(fill: string) {
-    setSelectedCategoryId(null);
-    setGuide(null);
-    setInputValue(fill);
-  }
-
-  const isUrgent = guide?.isUrgentEscalation ?? false;
+  const isUrgent = guide?.kind === 'Escalate';
   const hasPlan = Boolean(guide) || Boolean(localAnswer);
+  const wizardStep = selectedCategoryId === null ? 1 : hasPlan ? 3 : 2;
+  const stepClass = (step: number) => (wizardStep > step ? 'done' : wizardStep === step ? 'active' : '');
 
   return (
     <section className={`view ${active ? 'active' : ''}`} id="view-compass" aria-labelledby="compass-title">
@@ -141,20 +165,19 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
       <div className="flow-shell">
         <div className="card flow-main">
           <div className="stepper">
-            <div className="step active"><span className="step-num">1</span><span>Situation</span></div>
-            <div className="step"><span className="step-num">2</span><span>First step</span></div>
-            <div className="step"><span className="step-num">3</span><span>Prepare</span></div>
+            <div className={`step ${stepClass(1)}`}><span className="step-num">1</span><span>Category</span></div>
+            <div className={`step ${stepClass(2)}`}><span className="step-num">2</span><span>Specifics</span></div>
+            <div className={`step ${stepClass(3)}`}><span className="step-num">3</span><span>Prepare</span></div>
           </div>
-          <h3>What do you need help navigating?</h3>
 
+          <h3>1. What category is this?</h3>
           <div className="prompt-box">
-            <label>Or choose the category that fits best</label>
             <div className="chips category-chips">
               {categories.map((category) => (
                 <button
                   key={category.id}
                   className={`chip ${selectedCategoryId === category.id ? 'chip-selected' : ''}`}
-                  onClick={() => runGuideForCategory(category, category.defaultSituation)}
+                  onClick={() => selectCategory(category)}
                 >
                   {category.icon} {category.name}
                 </button>
@@ -162,47 +185,125 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
             </div>
           </div>
 
-          <div className="prompt-box">
-            <label htmlFor="compassInput">Describe the manager question</label>
-            <textarea
-              id="compassInput"
-              ref={textareaRef}
-              value={inputValue}
-              onChange={(event) => setInputValue(event.target.value)}
-              placeholder="Example: I need to talk with someone about missed goals, but I want to prepare fairly."
-            />
-            <div className="chips">
-              {CHIPS.map((chip) => (
-                <button key={chip.label} className="chip" onClick={() => handleChipClick(chip.fill)}>
-                  {chip.label}
-                </button>
-              ))}
+          {selectedCategoryId && (
+            <>
+              <h3>2. What specifically is going on? Check what applies.</h3>
+              <div className="prompt-box">
+                {scenariosForCategory.length > 0 ? (
+                  <div className="specifics-list">
+                    {scenariosForCategory.map((scenario) => {
+                      const category = categories.find((c) => c.id === selectedCategoryId)!;
+                      return (
+                        <label key={scenario.id} className="specifics-item">
+                          <input
+                            type="checkbox"
+                            checked={selectedScenarioIds.has(scenario.id)}
+                            onChange={() => toggleScenario(scenario, category)}
+                          />
+                          <span className="specifics-icon">{scenario.icon}</span>
+                          <span className="specifics-text">
+                            <strong>{scenario.title}</strong>
+                            <span>{scenario.description}</span>
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="muted" style={{ fontSize: '13px', margin: 0 }}>No specific situations listed for this category yet — describe it below.</p>
+                )}
+              </div>
+
+              <div className="prompt-box">
+                <label htmlFor="compassInput">Anything else to add? (edit freely)</label>
+                <textarea
+                  id="compassInput"
+                  ref={textareaRef}
+                  value={inputValue}
+                  onChange={(event) => setInputValue(event.target.value)}
+                  placeholder="Add any detail that's specific to your situation."
+                />
+              </div>
+            </>
+          )}
+
+          {!selectedCategoryId && (
+            <div className="prompt-box">
+              <label htmlFor="compassInput">Or just describe it in your own words</label>
+              <textarea
+                id="compassInput"
+                ref={textareaRef}
+                value={inputValue}
+                onChange={(event) => setInputValue(event.target.value)}
+                placeholder="Example: I need to talk with someone about missed goals, but I want to prepare fairly."
+              />
+              <div className="chips">
+                {CHIPS.map((chip) => (
+                  <button key={chip.label} className="chip" onClick={() => handleChipClick(chip.fill)}>
+                    {chip.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="flow-actions">
             <button className="btn btn-quiet" onClick={onNavigateHome}>Cancel</button>
-            <button className="btn btn-primary" onClick={handleShowFirstStep} disabled={isLoadingGuide}>
-              {isLoadingGuide ? 'Finding your first step…' : 'Show my first step'}
+            <button className="btn btn-primary" onClick={handlePreparePlan} disabled={isLoadingGuide || !inputValue.trim()}>
+              {isLoadingGuide ? 'Preparing your plan…' : 'Prepare my plan'}
             </button>
           </div>
 
           {guideError && <p className="form-error">{guideError}</p>}
 
           <div className={`answer-panel ${hasPlan ? 'visible' : ''} ${isUrgent ? 'urgent' : ''}`} ref={answerRef} aria-live="polite">
-            {guide && (
+            {guide?.kind === 'Escalate' && (
               <>
                 <div className="answer-top">
-                  <p className="eyebrow">{isUrgent ? 'Escalate now' : 'Recommended starting point'}</p>
-                  <h3>{guide.title}</h3>
-                  <p>{isUrgent ? 'This situation needs a person, not a self-serve guide.' : `Based on what you described: “${guide.situationSummary}”`}</p>
+                  <p className="eyebrow">Escalate now</p>
+                  <h3>This needs a person, not a self-serve guide.</h3>
+                  <p>{guide.escalationMessage}</p>
+                </div>
+                <div className="answer-body">
+                  {guide.contact && (
+                    <div className="route-box">
+                      <strong>{guide.contact.role}</strong>
+                      <p>{guide.contact.when}</p>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+            {guide?.kind === 'NoGuideFound' && (
+              <>
+                <div className="answer-top">
+                  <p className="eyebrow">Nothing here yet</p>
+                  <h3>No guide for this yet</h3>
+                  <p>{guide.noGuideMessage}</p>
+                </div>
+                {guide.contact && (
+                  <div className="answer-body">
+                    <div className="route-box">
+                      <strong>{guide.contact.role}</strong>
+                      <p>{guide.contact.when}</p>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+            {guide?.kind === 'Guide' && (
+              <>
+                <div className="answer-top">
+                  <p className="eyebrow">Recommended starting point</p>
+                  <h3>{guide.firstStep}</h3>
+                  <p>Here's what I heard: “{guide.situation}”</p>
                 </div>
                 <div className="answer-body">
                   <div className="answer-cols">
                     <div>
-                      <h4>{isUrgent ? 'Do this right now' : 'Manager-ready prep plan'}</h4>
+                      <h4>Manager-ready prep plan</h4>
                       <ul className="checklist">
-                        {guide.steps.map((step) => (
+                        {guide.prepareSteps.map((step) => (
                           <li key={step}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m5 12 4 4L19 6" /></svg>
                             <span>{step}</span>
@@ -212,23 +313,45 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
                     </div>
                     <div>
                       <h4>Route &amp; review</h4>
-                      {guide.escalation && (
+                      {guide.contact && (
                         <div className="route-box">
-                          <strong>{guide.escalation.role}</strong>
-                          <p>{guide.escalation.when}</p>
+                          <strong>{guide.contact.role}</strong>
+                          <p>{guide.contact.when}</p>
                         </div>
                       )}
                     </div>
                   </div>
-                  <div className="source-foot">
-                    {guide.recommendedDocumentation.length > 0 ? (
-                      <>
-                        <strong>Source of truth:</strong> {guide.recommendedDocumentation.map((doc) => doc.title).join(' · ')} <span>· approved internal reference</span>
-                      </>
-                    ) : (
-                      <span>{guide.guardrailNote}</span>
-                    )}
-                  </div>
+
+                  {guide.faqs.length > 0 && (
+                    <div className="faq-list">
+                      <h4>FAQs</h4>
+                      {guide.faqs.map((faq) => (
+                        <details key={faq.question}>
+                          <summary>{faq.question}</summary>
+                          <p>{faq.answer}</p>
+                        </details>
+                      ))}
+                    </div>
+                  )}
+
+                  {guide.learningMaterials.length > 0 && (
+                    <div className="materials-list">
+                      <h4>Learning materials</h4>
+                      <ul>
+                        {guide.learningMaterials.map((item) => (
+                          <li key={item.title}>
+                            <a href={item.url} target="_blank" rel="noreferrer">{item.title}</a> <span className="tag">{item.type}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {guide.documentation.length > 0 && (
+                    <div className="source-foot">
+                      <strong>Source of truth:</strong> {guide.documentation.map((doc) => doc.title).join(' · ')} <span>· approved internal reference</span>
+                    </div>
+                  )}
                 </div>
               </>
             )}

@@ -1,5 +1,6 @@
 import type { Category } from '../types/category';
 import type { Guide, GuideRequest } from '../types/guide';
+import type { Scenario } from '../types/scenario';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5171';
 
@@ -13,6 +14,10 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export function fetchCategories(): Promise<Category[]> {
   return request<Category[]>('/api/categories');
+}
+
+export function fetchScenarios(): Promise<Scenario[]> {
+  return request<Scenario[]>('/api/scenarios');
 }
 
 export function generateGuide(guideRequest: GuideRequest): Promise<Guide> {

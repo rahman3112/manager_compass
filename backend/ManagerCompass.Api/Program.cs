@@ -1,13 +1,17 @@
+using System.Text.Json.Serialization;
 using ManagerCompass.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddSingleton<SituationService>();
+builder.Services.AddSingleton<GuardrailService>();
 builder.Services.AddSingleton<ICategoryService, CategoryService>();
 builder.Services.AddSingleton<IScenarioService, ScenarioService>();
 builder.Services.AddSingleton<IGuideService, GuideService>();

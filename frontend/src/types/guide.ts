@@ -3,18 +3,19 @@ import type { EscalationContact, Faq, LearningMaterial, ResourceLink } from './c
 export interface GuideRequest {
   categoryId: string;
   situation: string;
-  desiredOutcome?: string;
 }
 
+export type GuideKind = 'Guide' | 'Escalate' | 'NoGuideFound';
+
 export interface Guide {
-  title: string;
-  isUrgentEscalation: boolean;
-  situationSummary: string;
-  desiredOutcome?: string;
-  steps: string[];
-  recommendedDocumentation: ResourceLink[];
-  relevantFaqs: Faq[];
+  kind: GuideKind;
+  escalationMessage?: string;
+  noGuideMessage?: string;
+  situation?: string;
+  firstStep?: string;
+  prepareSteps: string[];
+  documentation: ResourceLink[];
+  faqs: Faq[];
   learningMaterials: LearningMaterial[];
-  escalation?: EscalationContact;
-  guardrailNote: string;
+  contact?: EscalationContact;
 }
