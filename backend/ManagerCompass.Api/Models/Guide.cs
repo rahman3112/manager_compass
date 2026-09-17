@@ -4,6 +4,8 @@ public class GuideRequest
 {
     public string CategoryId { get; set; } = string.Empty;
     public string Situation { get; set; } = string.Empty;
+    public List<string> ScenarioIds { get; set; } = new();   
+
 }
 
 public enum GuideKind

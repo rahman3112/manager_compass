@@ -5,7 +5,7 @@ using ManagerCompass.Api.Services;
 namespace ManagerCompass.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/guides")]
     public class GuideController : ControllerBase
     {
         private readonly SituationService _situations;
@@ -24,7 +24,7 @@ namespace ManagerCompass.Api.Controllers
             if (escalation != null)
                 return Ok(escalation);
 
-            var guide = _situations.BuildGuide(request.CategoryId, request.Situation);
+            var guide = _situations.BuildGuide(request.CategoryId, request.Situation, request.ScenarioIds);
             return Ok(guide);
         }
     }

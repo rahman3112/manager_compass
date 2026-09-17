@@ -1,20 +1,24 @@
+using Microsoft.AspNetCore.Mvc;
 using ManagerCompass.Api.Models;
 using ManagerCompass.Api.Services;
-using Microsoft.AspNetCore.Mvc;
 
-namespace ManagerCompass.Api.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class ScenariosController : ControllerBase
+namespace ManagerCompass.Api.Controllers
 {
-    private readonly IScenarioService _scenarioService;
-
-    public ScenariosController(IScenarioService scenarioService)
+    [ApiController]
+    [Route("api/scenarios")]
+    public class ScenariosController : ControllerBase
     {
-        _scenarioService = scenarioService;
-    }
+        private readonly SituationService _situations;
 
-    [HttpGet]
-    public ActionResult<IReadOnlyList<Scenario>> GetAll() => Ok(_scenarioService.GetAll());
+        public ScenariosController(SituationService situations)
+        {
+            _situations = situations;
+        }
+
+        [HttpGet]
+        public ActionResult<List<Scenario>> Get()
+        {
+            return Ok(_situations.GetScenarios());
+        }
+    }
 }

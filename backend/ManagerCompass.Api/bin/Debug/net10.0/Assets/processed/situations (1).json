@@ -2,7 +2,7 @@
   "pay_discrepancy": {
     "category": "Payroll",
     "checkbox_tags": ["wrong_amount", "missed_payment", "urgent_pay"],
-    "keywords": ["wrong amount", "didn't get paid", "short paid", "missing pay", "pay error", "underpaid", "overpaid", "paid late", "late paycheck", "check was late", "delayed pay", "delayed paycheck"],
+    "keywords": ["wrong amount", "didn't get paid", "short paid", "missing pay", "pay error", "underpaid", "overpaid"],
     "steps": [
       "Confirm exactly what's wrong: missing pay, wrong amount, or a timing issue.",
       "Check whether it qualifies for an off-cycle payout: system failure with no pay, missed reinstatement/back-to-work reporting, or a timekeeping error affecting 50%+ of the team headcount (FA-POL-07).",
@@ -46,7 +46,7 @@
   "ada_accommodation": {
     "category": "Benefits",
     "checkbox_tags": ["accommodation_request", "medical_condition"],
-    "keywords": ["accommodation", "disability", "medical condition", "needs adjustment", "can't perform", "ada accommodation", "under the ada", "americans with disabilities"],
+    "keywords": ["accommodation", "disability", "medical condition", "needs adjustment", "can't perform", "ADA"],
     "steps": [
       "Any indication the employee needs a workplace adjustment is enough to start — they don't need to use special wording like \"ADA.\"",
       "Direct them to portal.unum.com to log in or register.",
@@ -146,7 +146,7 @@
   "goal_setting": {
     "category": "Talent & Development",
     "checkbox_tags": ["goal_setting", "development_plan"],
-    "keywords": ["set goals", "IDP", "development plan", "career goals", "goal progress", "SMART goal", "setting goals", "updating goals", "performance and development goals"],
+    "keywords": ["set goals", "IDP", "development plan", "career goals", "goal progress", "SMART goal"],
     "steps": [
       "Goals are employee-owned, not manager-assigned — guide and clarify rather than writing goals for them.",
       "Aim for 3-5 performance goals plus at least 1 development goal, set in Q1 (or within 30 days for new hires/transfers).",
@@ -177,7 +177,7 @@
   "team_conflict_or_change_discussion": {
     "category": "Talent & Development",
     "checkbox_tags": ["team_conflict", "morale", "leading_through_change"],
-    "keywords": ["conflict", "disagreement", "not getting along", "team tension", "morale", "team upset about change", "reorg", "restructuring", "tension on the team", "talk through a change"],
+    "keywords": ["conflict", "disagreement", "not getting along", "team tension", "morale", "team upset about change", "reorg", "restructuring"],
     "steps": [
       "Process your own reaction to the situation first, before involving the team.",
       "Prepare: understand the impact on your team, and set the meeting with a clear agenda (60-90 min, ideally 8-12 participants).",
@@ -272,7 +272,7 @@
   "attendance_tardiness": {
     "category": "Handbook & Policies",
     "checkbox_tags": ["attendance", "tardiness"],
-    "keywords": ["tardy", "undertime", "always late", "chronically late", "running late", "late for work", "keeps being late", "shows up late", "showing up late", "coming in late", "arriving late", "late every day", "consistently late"],
+    "keywords": ["late", "tardy", "undertime", "always late"],
     "steps": [
       "Employees get a total of 10 minutes of grace period per month.",
       "That's the same as 2 instances of tardiness/undertime combined, as long as they don't exceed 10 minutes together.",
@@ -344,14 +344,7 @@
   "sensitive_issue_escalation": {
     "category": "Employee Relations (guardrail only)",
     "checkbox_tags": ["harassment", "discrimination", "threat", "self_harm", "legal_action"],
-    "keywords": [
-      "harassment", "harassing", "discriminat", "threat", "threatening",
-      "hurt someone", "hurt myself", "suicide", "self-harm", "self harm",
-      "lawsuit", "attorney", "lawyer", "hostile",
-      "uncomfortable", "unwanted", "inappropriate comment", "inappropriate comments",
-      "keeps touching", "won't leave me alone", "makes me feel", "creepy",
-      "sexual comment", "sexual comments", "retaliat", "hostile work environment"
-    ],
+    "keywords": ["harassment", "discriminat", "threat", "hurt someone", "suicide", "self-harm", "lawsuit", "attorney", "hostile"],
     "steps": [],
     "docs": [],
     "faqs": [],

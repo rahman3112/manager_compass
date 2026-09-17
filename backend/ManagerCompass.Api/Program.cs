@@ -12,9 +12,6 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddSingleton<SituationService>();
 builder.Services.AddSingleton<GuardrailService>();
-builder.Services.AddSingleton<ICategoryService, CategoryService>();
-builder.Services.AddSingleton<IScenarioService, ScenarioService>();
-builder.Services.AddSingleton<IGuideService, GuideService>();
 
 const string FrontendCorsPolicy = "FrontendCorsPolicy";
 builder.Services.AddCors(options =>

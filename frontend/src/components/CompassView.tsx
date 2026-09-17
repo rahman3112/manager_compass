@@ -131,7 +131,8 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
       setGuideError(null);
       setIsLoadingGuide(true);
       try {
-        const result = await generateGuide({ categoryId: selectedCategoryId, situation: inputValue.trim() });
+        const result = await generateGuide({ categoryId: selectedCategoryId, situation: inputValue.trim(),
+  scenarioIds: Array.from(selectedScenarioIds),   });
         setGuide(result);
         setLocalAnswer(null);
       } catch {

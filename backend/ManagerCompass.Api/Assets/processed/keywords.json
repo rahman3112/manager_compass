@@ -6,7 +6,12 @@
     "missing pay",
     "pay error",
     "underpaid",
-    "overpaid"
+    "overpaid",
+    "paid late",
+    "late paycheck",
+    "check was late",
+    "delayed pay",
+    "delayed paycheck"
   ],
   "final_pay": [
     "final pay",
@@ -21,7 +26,9 @@
     "medical condition",
     "needs adjustment",
     "can't perform",
-    "ADA"
+    "ada accommodation",
+    "under the ada",
+    "americans with disabilities"
   ],
   "leave_fmla": [
     "FMLA",
@@ -55,7 +62,10 @@
     "development plan",
     "career goals",
     "goal progress",
-    "SMART goal"
+    "SMART goal",
+    "setting goals",
+    "updating goals",
+    "performance and development goals"
   ],
   "team_conflict_or_change_discussion": [
     "conflict",
@@ -65,7 +75,9 @@
     "morale",
     "team upset about change",
     "reorg",
-    "restructuring"
+    "restructuring",
+    "tension on the team",
+    "talk through a change"
   ],
   "new_manager_first_30_days": [
     "just became a manager",
@@ -87,10 +99,19 @@
     "offboarding"
   ],
   "attendance_tardiness": [
-    "late",
     "tardy",
     "undertime",
-    "always late"
+    "always late",
+    "chronically late",
+    "running late",
+    "late for work",
+    "keeps being late",
+    "shows up late",
+    "showing up late",
+    "coming in late",
+    "arriving late",
+    "late every day",
+    "consistently late"
   ],
   "no_call_no_show": [
     "no call no show",
@@ -107,11 +128,31 @@
   ],
   "compensation_question": [],
   "sensitive_issue_escalation": [
-    "harassment", "harassing", "discriminat", "threat", "threatening",
-    "hurt someone", "hurt myself", "suicide", "self-harm", "self harm",
-    "lawsuit", "attorney", "lawyer", "hostile",
-    "uncomfortable", "unwanted", "inappropriate comment", "inappropriate comments",
-    "keeps touching", "won't leave me alone", "makes me feel", "creepy",
-    "sexual comment", "sexual comments", "retaliat", "hostile work environment"
+    "harassment",
+    "harassing",
+    "discriminat",
+    "threat",
+    "threatening",
+    "hurt someone",
+    "hurt myself",
+    "suicide",
+    "self-harm",
+    "self harm",
+    "lawsuit",
+    "attorney",
+    "lawyer",
+    "hostile",
+    "uncomfortable",
+    "unwanted",
+    "inappropriate comment",
+    "inappropriate comments",
+    "keeps touching",
+    "won't leave me alone",
+    "makes me feel",
+    "creepy",
+    "sexual comment",
+    "sexual comments",
+    "retaliat",
+    "hostile work environment"
   ]
 }

@@ -1,32 +1,24 @@
+using Microsoft.AspNetCore.Mvc;
 using ManagerCompass.Api.Models;
 using ManagerCompass.Api.Services;
-using Microsoft.AspNetCore.Mvc;
 
-namespace ManagerCompass.Api.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class CategoriesController : ControllerBase
+namespace ManagerCompass.Api.Controllers
 {
-    private readonly ICategoryService _categoryService;
-
-    public CategoriesController(ICategoryService categoryService)
+    [ApiController]
+    [Route("api/categories")]
+    public class CategoriesController : ControllerBase
     {
-        _categoryService = categoryService;
-    }
+        private readonly SituationService _situations;
 
-    [HttpGet]
-    public ActionResult<IReadOnlyList<Category>> GetAll() => Ok(_categoryService.GetAll());
-
-    [HttpGet("{id}")]
-    public ActionResult<Category> GetById(string id)
-    {
-        var category = _categoryService.GetById(id);
-        if (category is null)
+        public CategoriesController(SituationService situations)
         {
-            return NotFound();
+            _situations = situations;
         }
 
-        return Ok(category);
+        [HttpGet]
+        public ActionResult<List<Category>> Get()
+        {
+            return Ok(_situations.GetCategories());
+        }
     }
 }

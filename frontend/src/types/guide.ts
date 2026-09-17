@@ -3,6 +3,7 @@ import type { EscalationContact, Faq, LearningMaterial, ResourceLink } from './c
 export interface GuideRequest {
   categoryId: string;
   situation: string;
+  scenarioIds: string[]; 
 }
 
 export type GuideKind = 'Guide' | 'Escalate' | 'NoGuideFound';
