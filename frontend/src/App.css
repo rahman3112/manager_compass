@@ -77,6 +77,15 @@ button { cursor: pointer; }
 .rail-btn:hover, .rail-btn.active { color: #fff; background: rgba(255,255,255,.1); }
 .rail-btn.active::before { content: ""; position: absolute; left: -12px; width: 4px; height: 26px; border-radius: 0 4px 4px 0; background: var(--coral); }
 .rail-btn svg { width: 22px; height: 22px; }
+.rail-label {
+  position: absolute; left: 100%; top: 50%; margin-left: 12px; z-index: 20;
+  padding: 9px 16px; border-radius: 10px; background: var(--navy-800); color: #fff;
+  font-size: 13px; font-weight: 700; white-space: nowrap; box-shadow: var(--shadow);
+  opacity: 0; pointer-events: none;
+  transform: translateY(-50%) translateX(-8px);
+  transition: opacity .15s ease, transform .15s ease;
+}
+.rail-btn:hover .rail-label, .rail-btn:focus-visible .rail-label { opacity: 1; transform: translateY(-50%) translateX(0); }
 .rail-spacer { flex: 1; }
 .avatar { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; color: var(--navy-900); background: var(--aqua); font-size: 12px; font-weight: 800; }
 
@@ -90,6 +99,18 @@ button { cursor: pointer; }
 .icon-btn, .text-btn { border: 1px solid var(--line); color: var(--ink); background: var(--paper); border-radius: 999px; }
 .icon-btn { width: 40px; height: 40px; display: grid; place-items: center; }
 .icon-btn svg { width: 17px; height: 17px; }
+.icon-label-btn {
+  height: 40px; display: inline-flex; align-items: center; gap: 8px; padding: 0 16px;
+  border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+  border-radius: 999px; font-size: 13px; font-weight: 700; cursor: pointer;
+  transition: border-color .15s ease, color .15s ease;
+}
+.icon-label-btn svg { width: 17px; height: 17px; flex: 0 0 auto; }
+.icon-label-btn:hover { border-color: var(--coral); color: var(--coral-deep); }
+@media (max-width: 640px) {
+  .icon-label-btn span { display: none; }
+  .icon-label-btn { width: 40px; padding: 0; justify-content: center; }
+}
 
 .view { display: none; animation: fade-in .35s ease both; }
 .view.active { display: block; }
@@ -307,6 +328,7 @@ p { line-height: 1.55; }
   .rail-nav { flex-direction: row; justify-content: space-around; gap: 4px; }
   .rail-btn { width: 48px; height: 48px; aspect-ratio: auto; }
   .rail-btn.active::before { left: auto; bottom: -10px; width: 20px; height: 3px; border-radius: 3px 3px 0 0; }
+  .rail-label { display: none; }
   .main { padding: 0 16px 92px; }
   .topbar { height: 72px; }
   .hero { min-height: 380px; padding: 32px 25px; align-items: start; }

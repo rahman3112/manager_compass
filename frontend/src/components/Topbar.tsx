@@ -1,10 +1,10 @@
 interface TopbarProps {
-  onHelp: () => void;
+  onViewUserGuide: () => void;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
 }
 
-export function Topbar({ onHelp, theme, onToggleTheme }: TopbarProps) {
+export function Topbar({ onViewUserGuide, theme, onToggleTheme }: TopbarProps) {
   const isDark = theme === 'dark';
   return (
     <header className="topbar">
@@ -31,11 +31,12 @@ export function Topbar({ onHelp, theme, onToggleTheme }: TopbarProps) {
             </svg>
           )}
         </button>
-        <button type="button" className="icon-btn" aria-label="Help" onClick={onHelp}>
+        <button type="button" className="icon-label-btn" title="View user guide" onClick={onViewUserGuide}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <circle cx="12" cy="12" r="9" />
             <path d="M9.7 9a2.35 2.35 0 1 1 3.9 1.76c-1.05.88-1.6 1.2-1.6 2.74M12 17h.01" />
           </svg>
+          <span>View user guide</span>
         </button>
       </div>
     </header>

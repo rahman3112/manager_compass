@@ -76,7 +76,7 @@ function App() {
 
       <main className="main">
         <Topbar
-          onHelp={() => showToast('Prototype note: complex, sensitive, or uncertain questions should route to HR.')}
+          onViewUserGuide={() => navigate('help')}
           theme={theme}
           onToggleTheme={toggleTheme}
         />

@@ -114,6 +114,13 @@ export function HomeView({ active, onGoToCompass, onGoToCompassWithCategory, onN
           </div>
           <div className="source-line">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M9.7 9a2.35 2.35 0 1 1 3.9 1.76c-1.05.88-1.6 1.2-1.6 2.74M12 17h.01" />
+            </svg>
+            <button className="source-link" onClick={() => onNavigate('help')}>View user guide</button>
+          </div>
+          <div className="source-line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M12 3a9 9 0 1 0 9 9" />
               <path d="M12 7v5l3 2" />
             </svg>

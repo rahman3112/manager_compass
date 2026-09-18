@@ -71,10 +71,10 @@ export function Rail({ currentView, onNavigate }: RailProps) {
             key={item.view}
             className={`rail-btn ${currentView === item.view ? 'active' : ''}`}
             aria-label={item.label}
-            title={item.label}
             onClick={() => onNavigate(item.view)}
           >
             {item.icon}
+            <span className="rail-label">{item.label}</span>
           </button>
         ))}
       </nav>
