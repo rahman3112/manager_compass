@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { fetchCategories, fetchScenarios, generateGuide } from '../api/client';
+import { fetchCategories, fetchScenarios, generateGuide, resolveAssetUrl } from '../api/client';
 import type { Category } from '../types/category';
 import type { Guide } from '../types/guide';
 import type { Scenario } from '../types/scenario';
+import type { ManagerTask, TaskRequest } from '../types/task';
+import { PlanFeedback } from './PlanFeedback';
+import { TaskForm } from './TaskForm';
 
 interface CompassViewProps {
   active: boolean;
   prefillToken: number;
   prefillText: string;
+  categoryToken: number;
+  prefillCategoryId: string | null;
   onNavigateHome: () => void;
 }
 
@@ -45,6 +50,12 @@ const CHIPS = [
   { label: 'Employee movement', fill: 'I need to start an employee movement request.' },
 ];
 
+const COUNTRIES = [
+  { value: '', label: 'All countries' },
+  { value: 'US', label: 'United States' },
+  { value: 'PH', label: 'Philippines' },
+];
+
 function classifyAnswer(rawInput: string): AnswerContent {
   const value = rawInput.trim().toLowerCase();
   const isTimeAway = value.includes('time') || value.includes('leave') || value.includes('away');
@@ -62,9 +73,10 @@ function renderStep(step: string) {
   return step;
 }
 
-export function CompassView({ active, prefillToken, prefillText, onNavigateHome }: CompassViewProps) {
+export function CompassView({ active, prefillToken, prefillText, categoryToken, prefillCategoryId, onNavigateHome }: CompassViewProps) {
   const [inputValue, setInputValue] = useState('');
   const [localAnswer, setLocalAnswer] = useState<AnswerContent | null>(null);
+  const [country, setCountry] = useState('');
   const [categories, setCategories] = useState<Category[]>([]);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
@@ -72,14 +84,17 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
   const [guide, setGuide] = useState<Guide | null>(null);
   const [isLoadingGuide, setIsLoadingGuide] = useState(false);
   const [guideError, setGuideError] = useState<string | null>(null);
+  const [taskFormInitial, setTaskFormInitial] = useState<Partial<TaskRequest> | null>(null);
+  const [createdTask, setCreatedTask] = useState<ManagerTask | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const hasMounted = useRef(false);
+  const appliedCategoryToken = useRef(0);
 
   useEffect(() => {
-    fetchCategories().then(setCategories).catch(() => setCategories([]));
-    fetchScenarios().then(setScenarios).catch(() => setScenarios([]));
-  }, []);
+    fetchCategories(country || undefined).then(setCategories).catch(() => setCategories([]));
+    fetchScenarios(country || undefined).then(setScenarios).catch(() => setScenarios([]));
+  }, [country]);
 
   useEffect(() => {
     if (!hasMounted.current) {
@@ -102,7 +117,26 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
     }
   }, [guide, localAnswer]);
 
+  // Category chosen from the Home tiles — wait for categories to load, then jump straight to step 2.
+  useEffect(() => {
+    if (categoryToken === 0 || categoryToken === appliedCategoryToken.current || !prefillCategoryId) {
+      return;
+    }
+    const category = categories.find((c) => c.id === prefillCategoryId);
+    if (category) {
+      selectCategory(category);
+      appliedCategoryToken.current = categoryToken;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryToken, categories, prefillCategoryId]);
+
   const scenariosForCategory = scenarios.filter((s) => s.categoryId === selectedCategoryId);
+  const selectedCategory = categories.find((c) => c.id === selectedCategoryId) ?? null;
+
+  function composeSituation(category: Category, scenarioIds: Set<string>) {
+    const picked = scenarios.filter((s) => scenarioIds.has(s.id)).map((s) => s.description);
+    return picked.length > 0 ? picked.join(' ') : category.defaultSituation;
+  }
 
   function selectCategory(category: Category) {
     setSelectedCategoryId(category.id);
@@ -111,6 +145,7 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
     setGuide(null);
     setLocalAnswer(null);
     setGuideError(null);
+    setCreatedTask(null);
   }
 
   function toggleScenario(scenario: Scenario, category: Category) {
@@ -121,9 +156,7 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
       next.add(scenario.id);
     }
     setSelectedScenarioIds(next);
-
-    const picked = scenarios.filter((s) => next.has(s.id));
-    setInputValue(picked.length > 0 ? picked.map((s) => s.description).join(' ') : category.defaultSituation);
+    setInputValue(composeSituation(category, next));
     setGuide(null);
   }
 
@@ -134,13 +167,13 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
     setInputValue(fill);
   }
 
-  async function handlePreparePlan() {
+  async function handleCreatePlan() {
+    setCreatedTask(null);
     if (selectedCategoryId) {
       setGuideError(null);
       setIsLoadingGuide(true);
       try {
-        const result = await generateGuide({ categoryId: selectedCategoryId, situation: inputValue.trim(),
-  scenarioIds: Array.from(selectedScenarioIds),   });
+        const result = await generateGuide({ categoryId: selectedCategoryId, situation: inputValue.trim(), scenarioIds: Array.from(selectedScenarioIds) });
         setGuide(result);
         setLocalAnswer(null);
       } catch {
@@ -153,6 +186,20 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
     }
     setGuide(null);
     setLocalAnswer(classifyAnswer(inputValue));
+  }
+
+  function openTaskFormFromPlan() {
+    if (!guide || guide.kind !== 'Guide' || !selectedCategoryId) return;
+    setTaskFormInitial({
+      name: guide.firstStep ?? 'Follow up on this plan',
+      categoryId: selectedCategoryId,
+      description: guide.situation ?? '',
+      dueDate: null,
+      priority: 'Medium',
+      status: 'NotStarted',
+      checklist: guide.prepareSteps.map((step) => ({ text: step, done: false })),
+      sourcePlanId: guide.planId ?? null,
+    });
   }
 
   const isUrgent = guide?.kind === 'Escalate';
@@ -179,20 +226,12 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
             <div className={`step ${stepClass(3)}`}><span className="step-num">3</span><span>Prepare</span></div>
           </div>
 
-          <h3>1. What category is this?</h3>
-          <div className="prompt-box">
-            <div className="chips category-chips">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  className={`chip ${selectedCategoryId === category.id ? 'chip-selected' : ''}`}
-                  onClick={() => selectCategory(category)}
-                >
-                  {category.icon} {category.name}
-                </button>
-              ))}
+          {selectedCategory && (
+            <div className="selected-category-banner">
+              <span>{selectedCategory.icon} <strong>{selectedCategory.name}</strong></span>
+              <button className="link-btn" onClick={onNavigateHome}>Change category</button>
             </div>
-          </div>
+          )}
 
           {selectedCategoryId && (
             <>
@@ -258,8 +297,8 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
 
           <div className="flow-actions">
             <button className="btn btn-quiet" onClick={onNavigateHome}>Cancel</button>
-            <button className="btn btn-primary" onClick={handlePreparePlan} disabled={isLoadingGuide || !inputValue.trim()}>
-              {isLoadingGuide ? 'Preparing your plan…' : 'Prepare my plan'}
+            <button className="btn btn-primary" onClick={handleCreatePlan} disabled={isLoadingGuide || !inputValue.trim()}>
+              {isLoadingGuide ? 'Creating plan…' : 'Create Plan'}
             </button>
           </div>
 
@@ -304,21 +343,21 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
               <>
                 <div className="answer-top">
                   <p className="eyebrow">Recommended starting point</p>
-                  <h3>{guide.firstStep}</h3>
+                  <h3>Here's your plan</h3>
                   <p>Here's what I heard: “{guide.situation}”</p>
                 </div>
                 <div className="answer-body">
                   <div className="answer-cols">
                     <div>
-                      <h4>Manager-ready prep plan</h4>
-                      <ul className="checklist">
-                        {guide.prepareSteps.map((step, index) => (
+                      <h4>Step-by-step</h4>
+                      <ol className="flow-timeline">
+                        {(guide.firstStep ? [guide.firstStep, ...guide.prepareSteps] : guide.prepareSteps).map((step, index) => (
                           <li key={step}>
-                            <span className="checklist-num">{index + 2}</span>
-                            <span>{renderStep(step)}</span>
+                            <span className={`flow-num ${index === 0 ? 'flow-num-first' : ''}`}>{index + 1}</span>
+                            <span className="flow-content">{renderStep(step)}</span>
                           </li>
                         ))}
-                      </ul>
+                      </ol>
                     </div>
                     <div>
                       <h4>Route &amp; review</h4>
@@ -349,7 +388,7 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
                       <ul>
                         {guide.learningMaterials.map((item) => (
                           <li key={item.title}>
-                            <a href={item.url} target="_blank" rel="noreferrer">{item.title}</a> <span className="tag">{item.type}</span>
+                            <a href={resolveAssetUrl(item.url)} target="_blank" rel="noopener">{item.title}</a> <span className="tag">{item.type}</span>
                           </li>
                         ))}
                       </ul>
@@ -361,6 +400,14 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
                       <strong>Source of truth:</strong> {guide.documentation.map((doc) => doc.title).join(' · ')} <span>· approved internal reference</span>
                     </div>
                   )}
+
+                  {createdTask ? (
+                    <p className="feedback-thanks create-task-btn">Plan "{createdTask.name}" saved — find it in the Plans tab.</p>
+                  ) : (
+                    <button className="btn btn-soft create-task-btn" onClick={openTaskFormFromPlan}>+ Save this to your plans</button>
+                  )}
+
+                  {guide.planId && <PlanFeedback planId={guide.planId} />}
                 </div>
               </>
             )}
@@ -409,36 +456,44 @@ export function CompassView({ active, prefillToken, prefillText, onNavigateHome 
 
         <aside>
           <div className="card side-card">
-            <h3>Human review guardrails</h3>
-            <div className="guardrail">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M12 3 4 6v5c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-3Z" />
-                <path d="M12 8v4M12 16h.01" />
-              </svg>
-              <span>No final disciplinary, termination, compensation, or legal decisions.</span>
-            </div>
-            <div className="guardrail">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <circle cx="12" cy="8" r="3" />
-                <path d="M5 20c.8-3.3 3.2-5 7-5s6.2 1.7 7 5" />
-              </svg>
-              <span>Use anonymized details. Do not paste case files or private messages.</span>
-            </div>
-            <div className="guardrail">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Z" />
-                <path d="M4 5.5v16" />
-              </svg>
-              <span>Every suggestion points back to an approved source.</span>
-            </div>
+            <h3>{selectedCategory ? `Documents · ${selectedCategory.name}` : 'Documents'}</h3>
+            {selectedCategory ? (
+              selectedCategory.documentation.length > 0 ? (
+                <ul className="doc-list">
+                  {selectedCategory.documentation.map((doc) => (
+                    <li key={doc.title}>
+                      <a href={resolveAssetUrl(doc.url)} target="_blank" rel="noopener">{doc.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="doc-empty">No source documents on file for this category yet.</p>
+              )
+            ) : (
+              <p className="doc-empty">Pick a category to see its approved documents here.</p>
+            )}
           </div>
-          <div className="card side-card">
-            <p className="eyebrow">Pilot principle</p>
-            <h3>Make the next move easier, not the decision for them.</h3>
-            <p className="muted" style={{ fontSize: '12px', marginBottom: 0 }}>Compass is a navigation layer for everyday questions. Complex, sensitive, or uncertain situations stay with the right HR owner.</p>
+
+          <div className="card country-filter">
+            <label htmlFor="countryFilter">Country</label>
+            <select id="countryFilter" value={country} onChange={(event) => setCountry(event.target.value)}>
+              {COUNTRIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+            </select>
           </div>
         </aside>
       </div>
+
+      {taskFormInitial && selectedCategory && (
+        <TaskForm
+          categories={categories}
+          initial={taskFormInitial}
+          onClose={() => setTaskFormInitial(null)}
+          onSaved={(task) => {
+            setTaskFormInitial(null);
+            setCreatedTask(task);
+          }}
+        />
+      )}
     </section>
   );
 }

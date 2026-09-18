@@ -10,6 +10,7 @@ export type GuideKind = 'Guide' | 'Escalate' | 'NoGuideFound';
 
 export interface Guide {
   kind: GuideKind;
+  planId?: string;
   escalationMessage?: string;
   noGuideMessage?: string;
   situation?: string;

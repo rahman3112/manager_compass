@@ -1,2 +1,6 @@
 bin/
 obj/
+
+# Runtime-generated plan/task data, not source content
+Assets/processed/plans.json
+Assets/processed/tasks.json

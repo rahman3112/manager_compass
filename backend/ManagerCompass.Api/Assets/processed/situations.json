@@ -1,8 +1,26 @@
 {
   "pay_discrepancy": {
     "category": "Payroll",
-    "checkbox_tags": ["wrong_amount", "missed_payment", "urgent_pay"],
-    "keywords": ["wrong amount", "didn't get paid", "short paid", "missing pay", "pay error", "underpaid", "overpaid", "paid late", "late paycheck", "check was late", "delayed pay", "delayed paycheck"],
+    "country": "PH",
+    "checkbox_tags": [
+      "wrong_amount",
+      "missed_payment",
+      "urgent_pay"
+    ],
+    "keywords": [
+      "wrong amount",
+      "didn't get paid",
+      "short paid",
+      "missing pay",
+      "pay error",
+      "underpaid",
+      "overpaid",
+      "paid late",
+      "late paycheck",
+      "check was late",
+      "delayed pay",
+      "delayed paycheck"
+    ],
     "steps": [
       "Confirm exactly what's wrong: missing pay, wrong amount, or a timing issue.",
       "Check whether it qualifies for an off-cycle payout: system failure with no pay, missed reinstatement/back-to-work reporting, or a timekeeping error affecting 50%+ of the team headcount (FA-POL-07).",
@@ -12,8 +30,14 @@
       "Let the employee know which path applies and roughly when it will be resolved."
     ],
     "docs": [
-      { "title": "FA-POL-07 Special Payout Guidelines", "file": "/assets/raw/payroll/FA-POL-07.docx" },
-      { "title": "FA-PRO-01 Payroll Processing Procedure", "file": "/assets/raw/payroll/FA-PRO-01.docx" }
+      {
+        "title": "FA-POL-07 Special Payout Guidelines",
+        "file": "/assets/raw/payroll/FA-POL-07.docx"
+      },
+      {
+        "title": "FA-PRO-01 Payroll Processing Procedure",
+        "file": "/assets/raw/payroll/FA-PRO-01.docx"
+      }
     ],
     "faqs": [],
     "learning": [],
@@ -21,11 +45,20 @@
     "status": "ready",
     "status_note": "Enriched with the real dispute-intake SharePoint link pulled directly from the source docx, replacing the earlier vague 'internal SharePoint list' reference."
   },
-
   "final_pay": {
     "category": "Payroll",
-    "checkbox_tags": ["employee_leaving", "final_pay"],
-    "keywords": ["final pay", "last paycheck", "separation pay", "leaving pay", "clearance pay"],
+    "country": "PH",
+    "checkbox_tags": [
+      "employee_leaving",
+      "final_pay"
+    ],
+    "keywords": [
+      "final pay",
+      "last paycheck",
+      "separation pay",
+      "leaving pay",
+      "clearance pay"
+    ],
     "steps": [
       "Confirm the employee's clearance has been completed and validated.",
       "Final pay computation covers: pro-rated 13th month, PTO conversion (voluntary separations only), unpaid benefits, tax refund/due, and any loan deductions.",
@@ -34,19 +67,37 @@
       "Walk the employee through the computation before they sign anything."
     ],
     "docs": [
-      { "title": "FA-POL-02 Final Pay Processing Policy", "file": "/assets/raw/payroll/FA-POL-02.docx" },
-      { "title": "FA-PRO-02 Final Pay Processing Procedure", "file": "/assets/raw/payroll/FA-PRO-02.docx" }
+      {
+        "title": "FA-POL-02 Final Pay Processing Policy",
+        "file": "/assets/raw/payroll/FA-POL-02.docx"
+      },
+      {
+        "title": "FA-PRO-02 Final Pay Processing Procedure",
+        "file": "/assets/raw/payroll/FA-PRO-02.docx"
+      }
     ],
     "faqs": [],
     "learning": [],
     "escalation_contact": "Payroll@realpage.com",
     "status": "ready"
   },
-
   "ada_accommodation": {
     "category": "Benefits",
-    "checkbox_tags": ["accommodation_request", "medical_condition"],
-    "keywords": ["accommodation", "disability", "medical condition", "needs adjustment", "can't perform", "ada accommodation", "under the ada", "americans with disabilities"],
+    "country": "US",
+    "checkbox_tags": [
+      "accommodation_request",
+      "medical_condition"
+    ],
+    "keywords": [
+      "accommodation",
+      "disability",
+      "medical condition",
+      "needs adjustment",
+      "can't perform",
+      "ada accommodation",
+      "under the ada",
+      "americans with disabilities"
+    ],
     "steps": [
       "Any indication the employee needs a workplace adjustment is enough to start — they don't need to use special wording like \"ADA.\"",
       "Direct them to portal.unum.com to log in or register.",
@@ -55,21 +106,42 @@
       "Retaliation against the employee for requesting this is prohibited at every stage."
     ],
     "docs": [
-      { "title": "ADA Accommodation Claim Filing Instructions", "file": "/assets/raw/benefits/ADA-Accommodation-Claim-Filing-Instructions.pdf" }
+      {
+        "title": "ADA Accommodation Claim Filing Instructions",
+        "file": "/assets/raw/benefits/ADA-Accommodation-Claim-Filing-Instructions.pdf"
+      }
     ],
     "faqs": [
-      { "q": "Does the employee need to use special legal wording?", "a": "No — any reasonable indication they need an accommodation is enough to start the process." },
-      { "q": "Is approval guaranteed?", "a": "No. The interactive process may result in denial; timelines vary case by case." }
+      {
+        "q": "Does the employee need to use special legal wording?",
+        "a": "No — any reasonable indication they need an accommodation is enough to start the process."
+      },
+      {
+        "q": "Is approval guaranteed?",
+        "a": "No. The interactive process may result in denial; timelines vary case by case."
+      }
     ],
     "learning": [],
     "escalation_contact": "benefits@realpage.com / portal.unum.com",
     "status": "ready"
   },
-
   "leave_fmla": {
     "category": "Benefits",
-    "checkbox_tags": ["leave_request", "medical_leave", "parental_leave"],
-    "keywords": ["FMLA", "leave of absence", "maternity", "paternity", "medical leave", "short term disability", "parental leave"],
+    "country": "US",
+    "checkbox_tags": [
+      "leave_request",
+      "medical_leave",
+      "parental_leave"
+    ],
+    "keywords": [
+      "FMLA",
+      "leave of absence",
+      "maternity",
+      "paternity",
+      "medical leave",
+      "short term disability",
+      "parental leave"
+    ],
     "steps": [
       "Employee contacts Unum to apply: portal.unum.com or 1-866-868-6737.",
       "They'll need their physician's name, phone number, and fax number ready.",
@@ -80,9 +152,18 @@
       "RealPage keeps paying both the employee and employer share of benefit premiums during leave; missed premiums are recovered by doubling deductions after return."
     ],
     "docs": [
-      { "title": "LOA Information", "file": "/assets/raw/benefits/LOA-Information.pdf" },
-      { "title": "Paid Parental Leave Policy", "file": "/assets/raw/benefits/Paid-Parental-Leave-Policy.pdf" },
-      { "title": "Total Leave Claim Filing Instructions", "file": "/assets/raw/benefits/Total-Leave-Claim-Filing-Instructions.pdf" }
+      {
+        "title": "LOA Information",
+        "file": "/assets/raw/benefits/LOA-Information.pdf"
+      },
+      {
+        "title": "Paid Parental Leave Policy",
+        "file": "/assets/raw/benefits/Paid-Parental-Leave-Policy.pdf"
+      },
+      {
+        "title": "Total Leave Claim Filing Instructions",
+        "file": "/assets/raw/benefits/Total-Leave-Claim-Filing-Instructions.pdf"
+      }
     ],
     "faqs": [],
     "learning": [],
@@ -90,11 +171,23 @@
     "status": "ready",
     "status_note": "Enriched with the real Unum phone number, FMLA/STD specifics, and state-specific filing requirements pulled directly from the source PDF."
   },
-
   "benefits_enrollment": {
     "category": "Benefits",
-    "checkbox_tags": ["plan_question", "enrollment"],
-    "keywords": ["which plan", "medical plan", "enroll", "premium", "401k", "retirement plan", "HSA", "FSA"],
+    "country": "US",
+    "checkbox_tags": [
+      "plan_question",
+      "enrollment"
+    ],
+    "keywords": [
+      "which plan",
+      "medical plan",
+      "enroll",
+      "premium",
+      "401k",
+      "retirement plan",
+      "HSA",
+      "FSA"
+    ],
     "steps": [
       "Coverage begins on the employee's hire date.",
       "Options: Traditional CDHP, Hybrid CDHP, BCBS PPO, and a Kaiser plan (California residents only).",
@@ -106,8 +199,14 @@
       "RealPage also offers a free, confidential Employee Assistance Program (EAP) through ComPsych GuidanceResources."
     ],
     "docs": [
-      { "title": "2026 Benefits Summary", "file": "/assets/raw/benefits/2026-Benefits-Summary.pdf" },
-      { "title": "Pretax or Roth Flyer", "file": "/assets/raw/benefits/Pretax-or-Roth-Flyer.pdf" }
+      {
+        "title": "2026 Benefits Summary",
+        "file": "/assets/raw/benefits/2026-Benefits-Summary.pdf"
+      },
+      {
+        "title": "Pretax or Roth Flyer",
+        "file": "/assets/raw/benefits/Pretax-or-Roth-Flyer.pdf"
+      }
     ],
     "faqs": [],
     "learning": [],
@@ -115,11 +214,20 @@
     "status": "ready",
     "status_note": "Enriched with real premium tiers, HSA/FSA dollar amounts, PTO accrual table, and the EAP program, pulled directly from the source PDF."
   },
-
   "coaching_low_performer": {
     "category": "Talent & Development",
-    "checkbox_tags": ["performance_issue", "coaching"],
-    "keywords": ["low performer", "underperforming", "missing deadlines", "not meeting expectations", "performance conversation"],
+    "country": "Global",
+    "checkbox_tags": [
+      "performance_issue",
+      "coaching"
+    ],
+    "keywords": [
+      "low performer",
+      "underperforming",
+      "missing deadlines",
+      "not meeting expectations",
+      "performance conversation"
+    ],
     "steps": [
       "Schedule 45-60 minutes with the employee and share the agenda in advance.",
       "Before the meeting: ask for their self-evaluation and career aspirations, and review your own evaluation/calibration notes to pull concrete examples.",
@@ -131,22 +239,44 @@
       "After: send a recap and schedule follow-ups (1:1s, mid-year check-in)."
     ],
     "docs": [
-      { "title": "Manager User Guide - Performance Conversation", "file": "/assets/raw/talent-development/Manager-Performance-Conversation.pdf" }
+      {
+        "title": "Manager User Guide - Performance Conversation",
+        "file": "/assets/raw/talent-development/Manager-Performance-Conversation.pdf"
+      }
     ],
     "faqs": [],
     "learning": [
-      { "title": "Making Performance Goals SMART (DDI)", "file": "/assets/raw/talent-development/SMART-Goals.pdf" },
-      { "title": "2025 Mid-Year Check-In Training", "file": "/assets/raw/talent-development/Mid-Year-Check-In-Training.pdf" }
+      {
+        "title": "Making Performance Goals SMART (DDI)",
+        "file": "/assets/raw/talent-development/SMART-Goals.pdf"
+      },
+      {
+        "title": "2025 Mid-Year Check-In Training",
+        "file": "/assets/raw/talent-development/Mid-Year-Check-In-Training.pdf"
+      }
     ],
     "escalation_contact": "LearningDevelopment@RealPage.com",
     "status": "ready",
     "status_note": "Enriched with the real Before/During/After manager checklist and STAR/STAR-AR framework pulled directly from the source PDF."
   },
-
   "goal_setting": {
     "category": "Talent & Development",
-    "checkbox_tags": ["goal_setting", "development_plan"],
-    "keywords": ["set goals", "IDP", "development plan", "career goals", "goal progress", "SMART goal", "setting goals", "updating goals", "performance and development goals"],
+    "country": "Global",
+    "checkbox_tags": [
+      "goal_setting",
+      "development_plan"
+    ],
+    "keywords": [
+      "set goals",
+      "IDP",
+      "development plan",
+      "career goals",
+      "goal progress",
+      "SMART goal",
+      "setting goals",
+      "updating goals",
+      "performance and development goals"
+    ],
     "steps": [
       "Goals are employee-owned, not manager-assigned — guide and clarify rather than writing goals for them.",
       "Aim for 3-5 performance goals plus at least 1 development goal, set in Q1 (or within 30 days for new hires/transfers).",
@@ -156,28 +286,67 @@
       "If priorities shift, goals can be updated or removed after discussing with you — but goals that were valid and simply not completed should stay, since they reflect performance."
     ],
     "docs": [
-      { "title": "Employee User Guide - Adding Goals", "file": "/assets/raw/talent-development/Adding-Goals.pdf" }
+      {
+        "title": "Employee User Guide - Adding Goals",
+        "file": "/assets/raw/talent-development/Adding-Goals.pdf"
+      }
     ],
     "faqs": [
-      { "q": "Are goals required?", "a": "Yes — they're required and included in the annual performance review." },
-      { "q": "Who creates the goals?", "a": "The employee, based on alignment conversations with their manager — managers no longer assign or write goals on the employee's behalf." },
-      { "q": "How many goals should someone have?", "a": "At least 3-5 performance goals, plus at least 1 development goal." },
-      { "q": "Will all goals show up in the annual review?", "a": "All active performance and development goals do. Personal goals unrelated to performance are being phased out and won't appear." },
-      { "q": "An employee transferred departments with existing goals — what do I do?", "a": "Consult your HRBP; the right approach depends on transfer timing and whether goals were already achieved." },
-      { "q": "Who do I contact for goal-setting or UKG technical issues?", "a": "Your HRBP for guidance; for UKG technical issues, HRIS@realpage.com or a UKG HR Help ticket." }
+      {
+        "q": "Are goals required?",
+        "a": "Yes — they're required and included in the annual performance review."
+      },
+      {
+        "q": "Who creates the goals?",
+        "a": "The employee, based on alignment conversations with their manager — managers no longer assign or write goals on the employee's behalf."
+      },
+      {
+        "q": "How many goals should someone have?",
+        "a": "At least 3-5 performance goals, plus at least 1 development goal."
+      },
+      {
+        "q": "Will all goals show up in the annual review?",
+        "a": "All active performance and development goals do. Personal goals unrelated to performance are being phased out and won't appear."
+      },
+      {
+        "q": "An employee transferred departments with existing goals — what do I do?",
+        "a": "Consult your HRBP; the right approach depends on transfer timing and whether goals were already achieved."
+      },
+      {
+        "q": "Who do I contact for goal-setting or UKG technical issues?",
+        "a": "Your HRBP for guidance; for UKG technical issues, HRIS@realpage.com or a UKG HR Help ticket."
+      }
     ],
     "learning": [
-      { "title": "Making Performance Goals SMART (DDI)", "file": "/assets/raw/talent-development/SMART-Goals.pdf" }
+      {
+        "title": "Making Performance Goals SMART (DDI)",
+        "file": "/assets/raw/talent-development/SMART-Goals.pdf"
+      }
     ],
     "escalation_contact": "HRIS@realpage.com (UKG/technical) or your HRBP (guidance)",
     "status": "ready",
     "status_note": "Enriched with the actual FAQ pairs and contact (HRIS@realpage.com) pulled directly from the source PDF, replacing the earlier paraphrased version."
   },
-
   "team_conflict_or_change_discussion": {
     "category": "Talent & Development",
-    "checkbox_tags": ["team_conflict", "morale", "leading_through_change"],
-    "keywords": ["conflict", "disagreement", "not getting along", "team tension", "morale", "team upset about change", "reorg", "restructuring", "tension on the team", "talk through a change"],
+    "country": "Global",
+    "checkbox_tags": [
+      "team_conflict",
+      "morale",
+      "leading_through_change"
+    ],
+    "keywords": [
+      "conflict",
+      "disagreement",
+      "not getting along",
+      "team tension",
+      "morale",
+      "team upset about change",
+      "reorg",
+      "restructuring",
+      "tension on the team",
+      "talk through a change"
+    ],
     "steps": [
       "Process your own reaction to the situation first, before involving the team.",
       "Prepare: understand the impact on your team, and set the meeting with a clear agenda (60-90 min, ideally 8-12 participants).",
@@ -188,22 +357,39 @@
       "Throughout: keep referring back to the agenda, use a 'parking lot' for off-topic issues, and ask open-ended questions rather than yes/no ones."
     ],
     "docs": [
-      { "title": "Team Discussion Framework - Leader's Guide", "file": "/assets/raw/talent-development/Team-Discussion-Framework.pdf" }
+      {
+        "title": "Team Discussion Framework - Leader's Guide",
+        "file": "/assets/raw/talent-development/Team-Discussion-Framework.pdf"
+      }
     ],
     "faqs": [],
     "learning": [
-      { "title": "Team Building and Icebreaker Activities V2.1", "file": "/assets/raw/talent-development/Team-Building-Activities.pdf" },
-      { "title": "Change Management - Manager Toolkit V2", "file": "/assets/raw/talent-development/Change-Management-Toolkit-V2.pdf" }
+      {
+        "title": "Team Building and Icebreaker Activities V2.1",
+        "file": "/assets/raw/talent-development/Team-Building-Activities.pdf"
+      },
+      {
+        "title": "Change Management - Manager Toolkit V2",
+        "file": "/assets/raw/talent-development/Change-Management-Toolkit-V2.pdf"
+      }
     ],
     "escalation_contact": "HRBP@RealPage.com",
     "status": "ready",
     "status_note": "Upgraded from 'thin' after reading the full source PDF — this is a genuine 6-step structured framework (Prepare / Open / During / Future State / Wrap-up / Tips), originally built for change conversations but directly applicable to team tension. Offer to co-facilitate with HRBP is explicitly built into the source document."
   },
-
   "new_manager_first_30_days": {
     "category": "Talent & Development",
-    "checkbox_tags": ["new_manager", "just_promoted"],
-    "keywords": ["just became a manager", "new to leading a team", "first time manager", "just promoted"],
+    "country": "Global",
+    "checkbox_tags": [
+      "new_manager",
+      "just_promoted"
+    ],
+    "keywords": [
+      "just became a manager",
+      "new to leading a team",
+      "first time manager",
+      "just promoted"
+    ],
     "steps": [
       "Day 1: meet with HR or your direct leader on onboarding details, meet your team, and confirm systems access.",
       "Days 2-3: complete Legal Compliance Training and all HR Compliance Videos in RealPage University.",
@@ -212,22 +398,39 @@
       "Ongoing: work through the rest of the First 30 Days checklist in the New Leader Toolkit."
     ],
     "docs": [
-      { "title": "New Leader Toolkit V5.1", "file": "/assets/raw/talent-development/New-Leader-Toolkit-V5.1.pdf" }
+      {
+        "title": "New Leader Toolkit V5.1",
+        "file": "/assets/raw/talent-development/New-Leader-Toolkit-V5.1.pdf"
+      }
     ],
     "faqs": [],
     "learning": [
-      { "title": "L2E Manager Guide - 2024", "file": "/assets/raw/talent-development/L2E-Manager-Guide-2024.pdf" },
-      { "title": "My Pathway", "file": "/assets/raw/talent-development/My-Pathway.pdf" }
+      {
+        "title": "L2E Manager Guide - 2024",
+        "file": "/assets/raw/talent-development/L2E-Manager-Guide-2024.pdf"
+      },
+      {
+        "title": "My Pathway",
+        "file": "/assets/raw/talent-development/My-Pathway.pdf"
+      }
     ],
     "escalation_contact": "LearningDevelopment@RealPage.com",
     "status": "ready",
     "status_note": "New tile added after reading the full source PDF — real day-by-day checklist exists (First 30 Days), not just a program overview."
   },
-
   "onboarding_new_hire": {
     "category": "Talent Services",
-    "checkbox_tags": ["new_hire", "onboarding"],
-    "keywords": ["new hire", "starting soon", "onboarding", "first day"],
+    "country": "Global",
+    "checkbox_tags": [
+      "new_hire",
+      "onboarding"
+    ],
+    "keywords": [
+      "new hire",
+      "starting soon",
+      "onboarding",
+      "first day"
+    ],
     "steps": [
       "Confirm the new hire's start date is locked in, and make sure Talent Services has been notified.",
       "US hires: Talent Services begins onboarding within 3 hours of the offer being accepted — check in if it's been longer.",
@@ -237,8 +440,14 @@
       "New to managing yourself? Check the New Leader Toolkit for a fuller first-30-days checklist."
     ],
     "docs": [
-      { "title": "Updated - US Onboarding Process Guide", "file": "/assets/raw/talent-services/US-Onboarding-Process-Guide.pdf" },
-      { "title": "PH Onboarding ProcessMap", "file": "/assets/raw/talent-services/PH-Onboarding-ProcessMap.pdf" }
+      {
+        "title": "Updated - US Onboarding Process Guide",
+        "file": "/assets/raw/talent-services/US-Onboarding-Process-Guide.pdf"
+      },
+      {
+        "title": "PH Onboarding ProcessMap",
+        "file": "/assets/raw/talent-services/PH-Onboarding-ProcessMap.pdf"
+      }
     ],
     "faqs": [],
     "learning": [],
@@ -246,11 +455,21 @@
     "status": "ready",
     "status_note": "Enriched with the real 3-hour SLA and step order pulled directly from the source PDF."
   },
-
   "offboarding_resignation": {
     "category": "Talent Services",
-    "checkbox_tags": ["employee_leaving", "resignation", "termination"],
-    "keywords": ["resigned", "resigning", "quitting", "leaving the company", "offboarding"],
+    "country": "Global",
+    "checkbox_tags": [
+      "employee_leaving",
+      "resignation",
+      "termination"
+    ],
+    "keywords": [
+      "resigned",
+      "resigning",
+      "quitting",
+      "leaving the company",
+      "offboarding"
+    ],
     "steps": [
       "Voluntary: employee submits a resignation request via HR Help.",
       "The ticket routes to you (the manager) for approval before reaching HR Shared Services (HRSC).",
@@ -261,7 +480,10 @@
       "Once processed, final pay computation begins based on the dates and reason you provided."
     ],
     "docs": [
-      { "title": "Offboarding Process in UKG (Revised)", "file": "/assets/raw/talent-services/Offboarding-Process-UKG.pdf" }
+      {
+        "title": "Offboarding Process in UKG (Revised)",
+        "file": "/assets/raw/talent-services/Offboarding-Process-UKG.pdf"
+      }
     ],
     "faqs": [],
     "learning": [],
@@ -269,11 +491,28 @@
     "status": "ready",
     "status_note": "Enriched with the real voluntary-vs-involuntary routing logic and the compliance note about late termination entry, pulled directly from the source PDF."
   },
-
   "attendance_tardiness": {
     "category": "Handbook & Policies",
-    "checkbox_tags": ["attendance", "tardiness"],
-    "keywords": ["tardy", "undertime", "always late", "chronically late", "running late", "late for work", "keeps being late", "shows up late", "showing up late", "coming in late", "arriving late", "late every day", "consistently late"],
+    "country": "PH",
+    "checkbox_tags": [
+      "attendance",
+      "tardiness"
+    ],
+    "keywords": [
+      "tardy",
+      "undertime",
+      "always late",
+      "chronically late",
+      "running late",
+      "late for work",
+      "keeps being late",
+      "shows up late",
+      "showing up late",
+      "coming in late",
+      "arriving late",
+      "late every day",
+      "consistently late"
+    ],
     "steps": [
       "Employees get a total of 10 minutes of grace period per month.",
       "That's the same as 2 instances of tardiness/undertime combined, as long as they don't exceed 10 minutes together.",
@@ -281,7 +520,10 @@
       "Check the Attendance Policy's consequence table for the applicable disciplinary step based on instance count."
     ],
     "docs": [
-      { "title": "HR - Attendance - Policy - Philippines (v3.0)", "file": "/assets/raw/handbook/HR-Attendance-Policy-PH.pdf" }
+      {
+        "title": "HR - Attendance - Policy - Philippines (v3.0)",
+        "file": "/assets/raw/handbook/HR-Attendance-Policy-PH.pdf"
+      }
     ],
     "faqs": [],
     "learning": [],
@@ -289,11 +531,20 @@
     "status": "ready",
     "status_note": "Enriched with the real 10-minute/2-instance grace-period rule pulled directly from the source PDF. Philippines-only — no US/global equivalent found."
   },
-
   "no_call_no_show": {
     "category": "Handbook & Policies",
-    "checkbox_tags": ["no_call_no_show", "unexplained_absence"],
-    "keywords": ["no call no show", "NCNS", "stopped showing up", "unreachable", "ghosted"],
+    "country": "PH",
+    "checkbox_tags": [
+      "no_call_no_show",
+      "unexplained_absence"
+    ],
+    "keywords": [
+      "no call no show",
+      "NCNS",
+      "stopped showing up",
+      "unreachable",
+      "ghosted"
+    ],
     "steps": [
       "Day 1: report the NCNS to your HRBP the same day it happens, via the prescribed form or email.",
       "Day 2: if the employee returns, serve a Notice to Explain (NTE) for the 1-day NCNS. If they remain absent, HRBP drafts a Return to Work Order (RTWO) with NTE, sent via DocuSign, work + personal email, courier, and registered mail.",
@@ -302,7 +553,10 @@
       "The full process (RTWO through Notice of Decision) runs through Day 41 — don't try to resolve this informally past Day 1; the formal timeline needs to start immediately."
     ],
     "docs": [
-      { "title": "HR - Return to Work Order - Procedure - Philippines (v3.0)", "file": "/assets/raw/handbook/HR-Return-to-Work-Order-PH.pdf" }
+      {
+        "title": "HR - Return to Work Order - Procedure - Philippines (v3.0)",
+        "file": "/assets/raw/handbook/HR-Return-to-Work-Order-PH.pdf"
+      }
     ],
     "faqs": [],
     "learning": [],
@@ -310,17 +564,28 @@
     "status": "ready",
     "status_note": "Enriched with the real Day 1-41 process pulled directly from the source PDF, including required delivery channels. Philippines-only — no US/global equivalent found."
   },
-
   "flexible_work_request": {
     "category": "Handbook & Policies",
-    "checkbox_tags": ["remote_work", "hybrid_request"],
-    "keywords": ["remote work", "hybrid", "work from home", "flexible schedule"],
+    "country": "PH",
+    "checkbox_tags": [
+      "remote_work",
+      "hybrid_request"
+    ],
+    "keywords": [
+      "remote work",
+      "hybrid",
+      "work from home",
+      "flexible schedule"
+    ],
     "steps": [
       "Check eligibility criteria for the type of arrangement requested: hybrid, fully remote, or an in-office exception.",
       "If the employee's location falls under the policy's list of locations considered 'far' from a RealPage office, that affects remote eligibility — confirm before deciding."
     ],
     "docs": [
-      { "title": "HR - Flexible Work - Policy - Philippines (v1.1)", "file": "/assets/raw/handbook/HR-Flexible-Work-Policy-PH.pdf" }
+      {
+        "title": "HR - Flexible Work - Policy - Philippines (v1.1)",
+        "file": "/assets/raw/handbook/HR-Flexible-Work-Policy-PH.pdf"
+      }
     ],
     "faqs": [],
     "learning": [],
@@ -328,30 +593,43 @@
     "status": "thin",
     "status_note": "Philippines-only. No equivalent US/global policy found — flag as regional in the UI, or hide this tile for non-PH managers."
   },
-
-  "compensation_question": {
-    "category": "Compensation",
-    "checkbox_tags": [],
-    "keywords": [],
-    "steps": [],
-    "docs": [],
-    "faqs": [],
-    "learning": [],
-    "escalation_contact": null,
-    "status": "no_content_available",
-    "status_note": "No source material exists anywhere in the library for Compensation. Do not fabricate steps. Either hide this tile for the demo or show an honest 'no guide available yet' message."
-  },
-
   "sensitive_issue_escalation": {
     "category": "Employee Relations (guardrail only)",
-    "checkbox_tags": ["harassment", "discrimination", "threat", "self_harm", "legal_action"],
+    "country": "Global",
+    "checkbox_tags": [
+      "harassment",
+      "discrimination",
+      "threat",
+      "self_harm",
+      "legal_action"
+    ],
     "keywords": [
-      "harassment", "harassing", "discriminat", "threat", "threatening",
-      "hurt someone", "hurt myself", "suicide", "self-harm", "self harm",
-      "lawsuit", "attorney", "lawyer", "hostile",
-      "uncomfortable", "unwanted", "inappropriate comment", "inappropriate comments",
-      "keeps touching", "won't leave me alone", "makes me feel", "creepy",
-      "sexual comment", "sexual comments", "retaliat", "hostile work environment"
+      "harassment",
+      "harassing",
+      "discriminat",
+      "threat",
+      "threatening",
+      "hurt someone",
+      "hurt myself",
+      "suicide",
+      "self-harm",
+      "self harm",
+      "lawsuit",
+      "attorney",
+      "lawyer",
+      "hostile",
+      "uncomfortable",
+      "unwanted",
+      "inappropriate comment",
+      "inappropriate comments",
+      "keeps touching",
+      "won't leave me alone",
+      "makes me feel",
+      "creepy",
+      "sexual comment",
+      "sexual comments",
+      "retaliat",
+      "hostile work environment"
     ],
     "steps": [],
     "docs": [],
@@ -360,5 +638,112 @@
     "escalation_contact": null,
     "status": "no_content_available",
     "status_note": "UPDATED after reading full source PDFs: three Philippines documents (Employee Code of Conduct, Employee Termination and Clearance, Return to Work Order) name 'Ivy De Borja, VP - HR Employee Relations (Philippines)' as the document owner/approver, and RTWO procedure shows the VP HR Employee Relations role approving Notices of Decision on Days 20 and 40. This is a real accountable ROLE for PH, not a fabricated one. HOWEVER: this is still not a usable escalation channel for your guardrail — there's no intake email, hotline, ticketing link, or SLA for a manager to actually reach this role in an urgent moment, and naming a specific individual is fragile (turnover). No equivalent role or process was found for US/global. Recommendation: use this finding as the starting point for an SME conversation ('should escalation route to the PH VP HR Employee Relations role, and what's the actual intake mechanism, plus what's the US/global equivalent?') rather than hardcoding Ivy De Borja's name into the product."
+  },
+  "employee_movement_report": {
+    "category": "Talent Services",
+    "country": "PH",
+    "checkbox_tags": [
+      "employee_movement",
+      "salary_change",
+      "transfer"
+    ],
+    "keywords": [
+      "employee movement",
+      "movement report",
+      "emr",
+      "salary inclusion",
+      "salary exclusion",
+      "transfer request"
+    ],
+    "steps": [
+      "Go to My Team in UKG, click People Assist, then Create a Request.",
+      "Select Payroll from the category list, then choose the Employee Movement Report form.",
+      "Fill out the form for the transaction type (Salary Inclusion or Salary Exclusion) and click Create request.",
+      "You'll get an automatic email acknowledgment — Talent Services then marks the request Accept, Complete, Reject, or Return.",
+      "If it's Returned, add the requested info via attachment or comment and click Resubmit.",
+      "Don't submit early: payroll cutoff is strictly the 15th or 30th, and each cutoff has its own earlier submission window."
+    ],
+    "docs": [
+      {
+        "title": "User Guide - Employee Movement Report (EMR)",
+        "file": "/assets/raw/talent-services/Employee-Movement-Report-EMR.pdf"
+      }
+    ],
+    "faqs": [],
+    "learning": [],
+    "escalation_contact": "Talent Services (via UKG People Assist)",
+    "status": "ready",
+    "status_note": "Real UKG People Assist workflow pulled directly from the source PDF, including the Accept/Complete/Reject/Return states and the strict payroll cutoff rule. Philippines-only — no US/global equivalent found."
+  },
+  "incentive_payment_request": {
+    "category": "Compensation",
+    "country": "PH",
+    "checkbox_tags": [
+      "incentive_payment",
+      "bonus",
+      "spot_award"
+    ],
+    "keywords": [
+      "incentive payment",
+      "spot bonus",
+      "incentive request",
+      "bonus request",
+      "award payment"
+    ],
+    "steps": [
+      "Go to My Team in UKG, click People Assist, then Create a Request.",
+      "Select Payroll from the category list, then choose the PHI - Incentive Payment Request form.",
+      "Fill out the form, attach the required approvals and the completed template, and click Create Request.",
+      "You'll get an automatic email acknowledgment — Talent Services then marks the request Accept, Complete, Reject, or Return.",
+      "If it's Returned, add the requested info via attachment or comment and click Resubmit.",
+      "Don't submit early: payroll cutoff is strictly the 15th or 30th, and each cutoff has its own earlier submission window."
+    ],
+    "docs": [
+      {
+        "title": "User Guide - Incentive Payment Request Form",
+        "file": "/assets/raw/compensation/Incentive-Payment-Request-Form.pdf"
+      }
+    ],
+    "faqs": [],
+    "learning": [],
+    "escalation_contact": "Talent Services (via UKG People Assist)",
+    "status": "ready",
+    "status_note": "First real content for the Compensation category — previously no_content_available. Real UKG People Assist workflow pulled directly from the source PDF; approvals/template must be attached before submitting. Philippines-only — no US/global equivalent found."
+  },
+  "code_of_conduct_concern": {
+    "category": "Handbook & Policies",
+    "country": "PH",
+    "checkbox_tags": [
+      "code_of_conduct",
+      "misconduct",
+      "disciplinary"
+    ],
+    "keywords": [
+      "code of conduct",
+      "violated policy",
+      "misconduct",
+      "disciplinary action",
+      "notice to explain",
+      "policy violation"
+    ],
+    "steps": [
+      "Write an Incident Report with the facts and any evidence, and send it to HR and your Department Head — do this within 60 days of the incident.",
+      "Don't try to determine the penalty yourself. HR and your Department Head jointly do a preliminary evaluation to decide if a Notice to Explain (NTE) is warranted.",
+      "If an NTE is issued, the employee gets time to respond in writing: 5 calendar days if termination is a possible penalty, 3 days for a Final Written Warning, or 1 working day for any lesser warning.",
+      "Any behavior that's actively disrupting the business must stop immediately while the case is pending — that's a safety measure, not a punishment.",
+      "After the written explanation, HR and your Department Head evaluate the case together; Legal must be involved if dismissal is being recommended.",
+      "The final Notice of Decision is drafted by HR (for Final Written Warning or Dismissal) or by the Department Manager (for lower-level sanctions), then reviewed and approved up the chain — this isn't something you write or decide alone."
+    ],
+    "docs": [
+      {
+        "title": "HR - Employee Code of Conduct - Policy - Philippines (v2)",
+        "file": "/assets/raw/handbook/HR-Employee-Code-of-Conduct-PH.pdf"
+      }
+    ],
+    "faqs": [],
+    "learning": [],
+    "escalation_contact": "HRBP@RealPage.com",
+    "status": "ready",
+    "status_note": "Pulled directly from the source PDF's Notice-to-Explain / Written-Explanation / Notice-of-Decision process and response-time rules. This covers the full disciplinary process for policy/conduct violations generally — it is deliberately separate from the sensitive_issue_escalation guardrail, which stays the hard gate for harassment, threats, or self-harm regardless of what's checked here. Philippines-only — no US/global equivalent found."
   }
 }

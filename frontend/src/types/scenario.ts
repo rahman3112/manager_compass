@@ -4,4 +4,5 @@ export interface Scenario {
   icon: string;
   description: string;
   categoryId: string;
+  country: string;
 }

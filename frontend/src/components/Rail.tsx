@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type ViewName = 'home' | 'compass' | 'resources' | 'insights';
+export type ViewName = 'home' | 'compass' | 'resources' | 'tasks' | 'help';
 
 interface RailProps {
   currentView: ViewName;
@@ -40,12 +40,23 @@ export function Rail({ currentView, onNavigate }: RailProps) {
       ),
     },
     {
-      view: 'insights',
-      label: 'Insights',
+      view: 'tasks',
+      label: 'Plans',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-          <path d="M4 19V5M4 19h17" />
-          <path d="m7 15 3-4 3 2 5-7" />
+          <path d="M9 5h10a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2" />
+          <path d="M9 3.5h6a1 1 0 0 1 1 1V6a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
+          <path d="m8 12 2 2 4-4" />
+        </svg>
+      ),
+    },
+    {
+      view: 'help',
+      label: 'How it works',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M9.7 9a2.35 2.35 0 1 1 3.9 1.76c-1.05.88-1.6 1.2-1.6 2.74M12 17h.01" />
         </svg>
       ),
     },
@@ -53,7 +64,6 @@ export function Rail({ currentView, onNavigate }: RailProps) {
 
   return (
     <aside className="rail" aria-label="Primary navigation">
-      <div className="wordmark" aria-label="RealPage">RealPage</div>
       <div className="rail-divider" />
       <nav className="rail-nav">
         {navItems.map((item) => (

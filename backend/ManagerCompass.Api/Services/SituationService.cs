@@ -19,6 +19,7 @@ namespace ManagerCompass.Api.Services
     internal class RawSituation
     {
         public string Category { get; set; } = "";
+        public string Country { get; set; } = "Global";
         public List<string> CheckboxTags { get; set; } = new();
         public List<string> Keywords { get; set; } = new();
         public List<string> Steps { get; set; } = new();
@@ -54,9 +55,6 @@ namespace ManagerCompass.Api.Services
             ["Benefits"] = ("🩺", "Medical, leave, retirement, and accommodation questions.",
                 "An employee has a question about their benefits, leave, or an accommodation request.",
                 "Point them to the right benefits process quickly."),
-            ["Compensation"] = ("📈", "Pay changes, raises, and promotions.",
-                "An employee is asking about a raise, promotion, or pay adjustment.",
-                "Route this to the right compensation owner."),
             ["Handbook & Policies"] = ("📘", "Company policy questions — attendance, conduct, and workplace rules.",
                 "I need to understand a policy or handle an attendance or conduct situation.",
                 "Apply the right policy consistently and fairly."),
@@ -84,10 +82,19 @@ namespace ManagerCompass.Api.Services
             ["attendance_tardiness"] = new("Attendance or tardiness", "⏰", "A team member is frequently late or has an undertime issue."),
             ["no_call_no_show"] = new("No call, no show", "📵", "An employee stopped showing up and is unreachable."),
             ["flexible_work_request"] = new("Remote or hybrid request", "🏠", "An employee is asking about a remote or hybrid work arrangement."),
-            ["compensation_question"] = new("Pay raise or promotion question", "💼", "An employee is asking about a raise, promotion, or compensation adjustment."),
+            ["employee_movement_report"] = new("Employee movement / salary change", "🔁", "A team member needs a salary inclusion or exclusion filed through UKG."),
+            ["incentive_payment_request"] = new("Incentive or spot bonus request", "🌟", "You need to request an incentive payment or spot bonus for a team member."),
+            ["code_of_conduct_concern"] = new("Possible code of conduct violation", "⚖️", "You suspect or were told about a possible policy or conduct violation."),
         };
 
-        public List<Category> GetCategories()
+        // A situation tagged "Global" is shown regardless of the manager's country filter;
+        // otherwise it must match exactly. No filter means show everything.
+        private static bool MatchesCountry(string situationCountry, string? filterCountry) =>
+            string.IsNullOrEmpty(filterCountry)
+            || situationCountry.Equals("Global", StringComparison.OrdinalIgnoreCase)
+            || situationCountry.Equals(filterCountry, StringComparison.OrdinalIgnoreCase);
+
+        public List<Category> GetCategories(string? country = null)
         {
             var result = new List<Category>();
 
@@ -96,6 +103,7 @@ namespace ManagerCompass.Api.Services
                 var situationsInCategory = _situations.Values
                     .Where(s => s.Category.Equals(categoryName, StringComparison.OrdinalIgnoreCase))
                     .Where(s => s.Status != "no_content_available")
+                    .Where(s => MatchesCountry(s.Country, country))
                     .ToList();
 
                 var docs = situationsInCategory
@@ -136,7 +144,7 @@ namespace ManagerCompass.Api.Services
             return result;
         }
 
-        public List<Scenario> GetScenarios()
+        public List<Scenario> GetScenarios(string? country = null)
         {
             var result = new List<Scenario>();
 
@@ -145,13 +153,17 @@ namespace ManagerCompass.Api.Services
                 if (!ScenarioMetaById.TryGetValue(situationId, out var meta))
                     continue;
 
+                if (!MatchesCountry(situation.Country, country))
+                    continue;
+
                 result.Add(new Scenario
                 {
                     Id = situationId,
                     Title = meta.Title,
                     Icon = meta.Icon,
                     Description = meta.Description,
-                    CategoryId = situation.Category
+                    CategoryId = situation.Category,
+                    Country = situation.Country
                 });
             }
 

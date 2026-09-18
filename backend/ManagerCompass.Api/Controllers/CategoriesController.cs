@@ -16,9 +16,9 @@ namespace ManagerCompass.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Category>> Get()
+        public ActionResult<List<Category>> Get([FromQuery] string? country)
         {
-            return Ok(_situations.GetCategories());
+            return Ok(_situations.GetCategories(country));
         }
     }
 }

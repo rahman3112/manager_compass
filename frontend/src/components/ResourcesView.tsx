@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+import { fetchResources, resolveAssetUrl } from '../api/client';
+import type { ResourceNode } from '../types/resource';
+
 interface ResourcesViewProps {
   active: boolean;
   onNavigateHome: () => void;
@@ -10,62 +14,130 @@ const FILE_ICON = (
   </svg>
 );
 
-const FOLDER_ICON = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-    <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Z" />
-    <path d="M4 5.5v16M8 7h8M8 11h8" />
-  </svg>
-);
+const CATEGORY_DESCRIPTIONS: Record<string, string> = {
+  'Handbook & Policies': 'Attendance, code of conduct, flexible work, PTO, and return-to-work policies.',
+  'Training & Development': 'Performance conversations, SMART goals, leader toolkits, and change management.',
+  'Employee Relations & Guardrails': 'Resignation, offboarding, employee movement, and incentive request guides.',
+  'Talent Services & Intake Routing': 'Global, PH, and US paths for onboarding, offboarding, and EMR.',
+};
 
-const RESOURCES = [
-  { icon: FILE_ICON, title: 'Manager Resources', description: 'Change Management Toolkit, Team Discussion Framework, and character modules.', tag: '5 references' },
-  { icon: FILE_ICON, title: 'PH Handbook & Policies', description: 'Attendance, code of conduct, flexible work, PTO, return-to-work, and clearance.', tag: '12 references' },
-  { icon: FILE_ICON, title: 'Training & Development', description: 'Performance Conversation, SMART goals, manager assessment, and new leader toolkits.', tag: '17 references' },
-  { icon: FILE_ICON, title: 'Payroll · Philippines', description: 'Timekeeping, final pay, 13th month, special payout, and payroll procedures.', tag: '10 references' },
-  { icon: FILE_ICON, title: 'Employee Relations & guardrails', description: 'Resignation, offboarding, employee movement, and incentive request guides.', tag: '4 references' },
-  { icon: FOLDER_ICON, title: 'Talent Services & intake routing', description: 'Global, India, PH, and US paths for onboarding, offboarding, and EMR.', tag: '4 region paths' },
-];
+interface FlatFile {
+  name: string;
+  url: string;
+  extension: string;
+  path: string;
+}
+
+function flattenCategory(category: ResourceNode): FlatFile[] {
+  const result: FlatFile[] = [];
+
+  function walk(node: ResourceNode, trail: string[]) {
+    const children = node.children ?? [];
+    for (const child of children) {
+      if (child.isFolder) {
+        walk(child, [...trail, child.name]);
+      } else if (child.url) {
+        result.push({
+          name: child.name,
+          url: child.url,
+          extension: child.extension ?? '',
+          path: trail.join(' / '),
+        });
+      }
+    }
+  }
+
+  walk(category, []);
+  return result;
+}
+
+/** Groups an already-flattened file list back into its subfolder sections, in first-seen order. */
+function groupByPath(files: FlatFile[]): { path: string; files: FlatFile[] }[] {
+  const groups: { path: string; files: FlatFile[] }[] = [];
+  for (const file of files) {
+    const existing = groups.find((g) => g.path === file.path);
+    if (existing) {
+      existing.files.push(file);
+    } else {
+      groups.push({ path: file.path, files: [file] });
+    }
+  }
+  return groups;
+}
 
 export function ResourcesView({ active, onNavigateHome }: ResourcesViewProps) {
+  const [tree, setTree] = useState<ResourceNode[]>([]);
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    fetchResources().then(setTree).catch(() => setTree([]));
+  }, []);
+
+  function toggleCategory(name: string) {
+    setCollapsed((prev) => ({ ...prev, [name]: !prev[name] }));
+  }
+
+  const totalFiles = tree.reduce((sum, category) => sum + flattenCategory(category).length, 0);
+
   return (
     <section className={`view ${active ? 'active' : ''}`} id="view-resources" aria-labelledby="resources-title">
       <div className="view-header">
         <div>
           <p className="eyebrow">Approved internal library</p>
           <h2 id="resources-title">Your source of truth, organized.</h2>
-          <p>Reference paths shown here mirror the hackathon resource set. Prototype links are illustrative.</p>
+          <p>{totalFiles} real approved documents across {tree.length} categories — the same files Compass grounds its guides in.</p>
         </div>
-        <button className="btn btn-quiet" onClick={onNavigateHome}>← Back to home</button>
+        <button type="button" className="btn btn-quiet" onClick={onNavigateHome}>← Back to home</button>
       </div>
 
-      <div className="resources-grid">
-        {RESOURCES.map((resource) => (
-          <div className="card resource-card" key={resource.title}>
-            <div className="file-icon">{resource.icon}</div>
-            <div>
-              <h3>{resource.title}</h3>
-              <p>{resource.description}</p>
-              <span className="tag">{resource.tag}</span>
+      <div className="resource-groups">
+        {tree.map((category) => {
+          const files = flattenCategory(category);
+          const grouped = groupByPath(files);
+          const isCollapsed = collapsed[category.name] ?? false;
+          return (
+            <div className="card resource-group" key={category.name}>
+              <button
+                type="button"
+                className="resource-group-head resource-group-head-toggle"
+                onClick={() => toggleCategory(category.name)}
+                aria-expanded={!isCollapsed}
+              >
+                <div className="file-icon">{FILE_ICON}</div>
+                <div className="resource-group-head-text">
+                  <h3>{category.name}</h3>
+                  <p>{CATEGORY_DESCRIPTIONS[category.name] ?? ''}</p>
+                </div>
+                <span className="tag">{files.length} document{files.length === 1 ? '' : 's'}</span>
+                <svg
+                  className={`resource-group-chevron ${isCollapsed ? '' : 'open'}`}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="m7 10 5 5 5-5" />
+                </svg>
+              </button>
+
+              {!isCollapsed && grouped.map((group) => (
+                <div className="resource-subgroup" key={group.path || '__root'}>
+                  {group.path && <p className="resource-subgroup-label">{group.path}</p>}
+                  <ul className="resource-file-list">
+                    {group.files.map((file, index) => (
+                      <li key={index}>
+                        <a href={resolveAssetUrl(file.url)} target="_blank" rel="noopener">
+                          <span className="file-ext-badge">{file.extension}</span>
+                          <span>{file.name}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="section-heading">
-        <div>
-          <h2>Sanitized data for the prototype</h2>
-          <p>Used only to demonstrate safe aggregate insight behavior.</p>
-        </div>
-      </div>
-      <div className="card source-card">
-        <div className="source-head">
-          <div>
-            <h3>10_Sample HR Dataset</h3>
-            <p>active_fte.xlsx · exits.xlsx · requisitions.xlsx · contractors_interns_fact_consultants.xlsx</p>
-          </div>
-          <span className="source-badge">DEMO ONLY</span>
-        </div>
-        <p style={{ marginBottom: 0 }}>Small-cell suppression and employee-detail exclusions are part of the prototype guardrails. No real employee records are used in this wireframe.</p>
+          );
+        })}
       </div>
     </section>
   );

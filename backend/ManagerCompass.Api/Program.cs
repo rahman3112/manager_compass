@@ -13,6 +13,9 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddSingleton<SituationService>();
 builder.Services.AddSingleton<GuardrailService>();
+builder.Services.AddSingleton<PlanService>();
+builder.Services.AddSingleton<TaskService>();
+builder.Services.AddSingleton<ResourceLibraryService>();
 
 // Comma-separated list of production frontend origins, e.g. https://manager-compass.vercel.app
 var allowedOrigins = (builder.Configuration["AllowedOrigins"] ?? "")
@@ -46,7 +49,15 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+// No app.UseHttpsRedirection() here: the container only listens on plain HTTP
+// (ASPNETCORE_URLS=http://+:8080 in the Dockerfile) and TLS is terminated by the
+// host platform's edge/proxy in front of it, so redirecting to HTTPS inside the
+// container has nothing to redirect to and can break platform health checks.
+
+// Serves the built frontend (wwwroot, produced by `npm run build` and copied in
+// by the Dockerfile) so the whole app is one deployable unit on one origin.
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 // Serves the real policy/process documents that Documentation links point at
 // (e.g. /assets/raw/payroll/FA-POL-07.docx), matching document paths in situations.json.

@@ -1,9 +1,13 @@
-import { useState, type KeyboardEvent } from 'react';
+import { useEffect, useState } from 'react';
+import { fetchCategories } from '../api/client';
+import type { Category } from '../types/category';
 import type { ViewName } from './Rail';
+import { colorForCategory } from '../utils/categoryColors';
 
 interface HomeViewProps {
   active: boolean;
   onGoToCompass: (text: string) => void;
+  onGoToCompassWithCategory: (categoryId: string) => void;
   onNavigate: (view: ViewName) => void;
   onShowToast: (message: string) => void;
 }
@@ -11,18 +15,12 @@ interface HomeViewProps {
 const CONVERSATION_PREFILL = 'I need to prepare for a performance conversation.';
 const QUESTION_PREFILL = 'I have an HR policy or process question.';
 
-export function HomeView({ active, onGoToCompass, onNavigate, onShowToast }: HomeViewProps) {
-  const [searchValue, setSearchValue] = useState('');
+export function HomeView({ active, onGoToCompass, onGoToCompassWithCategory, onNavigate, onShowToast }: HomeViewProps) {
+  const [categories, setCategories] = useState<Category[]>([]);
 
-  function submitSearch() {
-    onGoToCompass(searchValue.trim() || 'I need help navigating an HR question.');
-  }
-
-  function handleSearchKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Enter') {
-      submitSearch();
-    }
-  }
+  useEffect(() => {
+    fetchCategories().then(setCategories).catch(() => setCategories([]));
+  }, []);
 
   function browseSourceLibrary() {
     onNavigate('resources');
@@ -40,74 +38,34 @@ export function HomeView({ active, onGoToCompass, onNavigate, onShowToast }: Hom
         <div className="hero-stamp"><strong>Human<br />by design</strong>Guidance that knows when to bring in HR.</div>
       </div>
 
-      <div className="search-card" role="search">
-        <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-4-4" />
-        </svg>
-        <input
-          type="search"
-          aria-label="Ask Manager Compass"
-          placeholder="Ask a people question in your own words…"
-          value={searchValue}
-          onChange={(event) => setSearchValue(event.target.value)}
-          onKeyDown={handleSearchKeyDown}
-        />
-        <button className="btn btn-primary" onClick={submitSearch}>Find my first step</button>
-      </div>
-
       <div className="section-heading">
         <div>
-          <h2>Where do you want to start?</h2>
-          <p>Choose a guided path for the situation in front of you.</p>
+          <h2>What category is this?</h2>
+          <p>Pick a category to jump straight into the specifics.</p>
         </div>
+        <button className="link-btn" onClick={() => onNavigate('tasks')}>Track your plans →</button>
       </div>
-      <div className="grid-3">
-        <button className="card path-card" onClick={() => onGoToCompass(CONVERSATION_PREFILL)}>
-          <span className="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-6l-4 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
-              <path d="M7 8h10M7 12h6" />
-            </svg>
-          </span>
-          <h3>Prepare for a people conversation</h3>
-          <p>Get a neutral prep plan for coaching, goals, or development.</p>
-          <span className="path-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-          </span>
-        </button>
-        <button className="card path-card" onClick={() => onGoToCompass(QUESTION_PREFILL)}>
-          <span className="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Z" />
-              <path d="M4 5.5v16M8 7h8M8 11h8M8 15h5" />
-            </svg>
-          </span>
-          <h3>Find a policy or process</h3>
-          <p>Start with the approved source of truth for a day-to-day HR question.</p>
-          <span className="path-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-          </span>
-        </button>
-        <button className="card path-card" onClick={() => onNavigate('insights')}>
-          <span className="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M4 19V5M4 19h17" />
-              <path d="M7 15 10 9l3 3 5-7" />
-            </svg>
-          </span>
-          <h3>Understand a team trend</h3>
-          <p>Explore sanitized aggregate data and know when HRBP review is needed.</p>
-          <span className="path-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-          </span>
-        </button>
+      <div className="category-tile-grid">
+        {categories.map((category, index) => {
+          const color = colorForCategory(index);
+          return (
+            <button
+              key={category.id}
+              className="card category-tile"
+              style={{ background: color.bg, color: color.text }}
+              onClick={() => onGoToCompassWithCategory(category.id)}
+            >
+              <span className="category-tile-icon">{category.icon}</span>
+              <h3>{category.name}</h3>
+              <p>{category.description}</p>
+              <span className="path-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       <div className="section-heading">

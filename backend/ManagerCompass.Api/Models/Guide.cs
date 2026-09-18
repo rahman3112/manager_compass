@@ -24,6 +24,10 @@ public class Guide
 {
     public GuideKind Kind { get; set; }
 
+    // Set only when Kind == Guide, so the frontend can attach helpfulness feedback
+    // and offer "create a task from this plan" against the right history record.
+    public string? PlanId { get; set; }
+
     // Kind == Escalate
     public string? EscalationMessage { get; set; }
 
