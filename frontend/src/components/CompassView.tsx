@@ -148,13 +148,8 @@ export function CompassView({ active, prefillToken, prefillText, categoryToken, 
     setCreatedTask(null);
   }
 
-  function toggleScenario(scenario: Scenario, category: Category) {
-    const next = new Set(selectedScenarioIds);
-    if (next.has(scenario.id)) {
-      next.delete(scenario.id);
-    } else {
-      next.add(scenario.id);
-    }
+  function selectScenario(scenario: Scenario, category: Category) {
+    const next = selectedScenarioIds.has(scenario.id) ? new Set<string>() : new Set([scenario.id]);
     setSelectedScenarioIds(next);
     setInputValue(composeSituation(category, next));
     setGuide(null);
@@ -235,7 +230,7 @@ export function CompassView({ active, prefillToken, prefillText, categoryToken, 
 
           {selectedCategoryId && (
             <>
-              <h3>2. What specifically is going on? Check what applies.</h3>
+              <h3>2. What specifically is going on? Select the one that fits best.</h3>
               <div className="prompt-box">
                 {scenariosForCategory.length > 0 ? (
                   <div className="specifics-list">
@@ -244,9 +239,10 @@ export function CompassView({ active, prefillToken, prefillText, categoryToken, 
                       return (
                         <label key={scenario.id} className="specifics-item">
                           <input
-                            type="checkbox"
+                            type="radio"
+                            name="specifics-scenario"
                             checked={selectedScenarioIds.has(scenario.id)}
-                            onChange={() => toggleScenario(scenario, category)}
+                            onChange={() => selectScenario(scenario, category)}
                           />
                           <span className="specifics-icon">{scenario.icon}</span>
                           <span className="specifics-text">

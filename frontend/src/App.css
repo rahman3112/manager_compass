@@ -227,7 +227,7 @@ p { line-height: 1.55; }
 .specifics-list { display: flex; flex-direction: column; gap: 8px; }
 .specifics-item { display: flex; align-items: flex-start; gap: 11px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); cursor: pointer; transition: border-color .15s ease; }
 .specifics-item:hover { border-color: var(--coral); }
-.specifics-item input[type="checkbox"] { margin-top: 3px; accent-color: var(--coral); flex: 0 0 auto; }
+.specifics-item input[type="radio"] { margin-top: 3px; accent-color: var(--coral); flex: 0 0 auto; }
 .specifics-icon { font-size: 16px; flex: 0 0 auto; }
 .specifics-text { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
 .specifics-text strong { color: var(--ink); font-size: 13.5px; }
