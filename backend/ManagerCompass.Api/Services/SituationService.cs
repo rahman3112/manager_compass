@@ -85,6 +85,12 @@ namespace ManagerCompass.Api.Services
             ["employee_movement_report"] = new("Employee movement / salary change", "🔁", "A team member needs a salary inclusion or exclusion filed through UKG."),
             ["incentive_payment_request"] = new("Incentive or spot bonus request", "🌟", "You need to request an incentive payment or spot bonus for a team member."),
             ["code_of_conduct_concern"] = new("Possible code of conduct violation", "⚖️", "You suspect or were told about a possible policy or conduct violation."),
+            ["pto_request"] = new("PTO or time off request", "🏖️", "A team member wants to request or has requested paid time off."),
+            ["internal_transfer_request"] = new("Internal transfer or role change interest", "🔄", "An employee wants to explore or has been offered a different role or location within the company."),
+            ["performance_review_evaluation"] = new("Mid-year or annual performance review", "📝", "You need to complete a formal performance evaluation for a team member in UKG."),
+            ["smart_goal_coaching"] = new("Coaching on SMART goals", "📐", "An employee's goal isn't specific or measurable enough and needs coaching to tighten it up."),
+            ["leading_through_change"] = new("Leading the team through a change", "🔀", "Your team is going through a reorg, process change, or other disruption and needs support through it."),
+            ["contractor_onboarding"] = new("Bringing on a contractor", "🧑‍💻", "You need to onboard a new contractor or contingent worker onto your team."),
         };
 
         // A situation tagged "Global" is shown regardless of the manager's country filter;

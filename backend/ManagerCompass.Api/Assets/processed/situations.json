@@ -745,5 +745,229 @@
     "escalation_contact": "HRBP@RealPage.com",
     "status": "ready",
     "status_note": "Pulled directly from the source PDF's Notice-to-Explain / Written-Explanation / Notice-of-Decision process and response-time rules. This covers the full disciplinary process for policy/conduct violations generally — it is deliberately separate from the sensitive_issue_escalation guardrail, which stays the hard gate for harassment, threats, or self-harm regardless of what's checked here. Philippines-only — no US/global equivalent found."
+  },
+  "pto_request": {
+    "category": "Handbook & Policies",
+    "country": "PH",
+    "checkbox_tags": [
+      "pto",
+      "time_off",
+      "vacation_request"
+    ],
+    "keywords": [
+      "pto request",
+      "time off",
+      "vacation",
+      "paid leave",
+      "day off",
+      "leave request"
+    ],
+    "steps": [
+      "Confirm the employee is past their 3rd month of employment and has enough accrued PTO for the request — PTO accrues from day one, but is only usable starting month 3.",
+      "Have them submit the request through the official timekeeping system, ideally at least 14 calendar days before the intended date.",
+      "Review and approve or decline the request promptly based on operational needs, within the timekeeping system.",
+      "If the absence is due to illness of 2+ consecutive workdays (or any contagious illness), confirm a Medical Certificate or Physician's Statement is on file.",
+      "Know the limits if the employee asks: accrual is 20 days/year under 5 years of service (30 days/year at 5+), unused PTO carries over up to 5 or 10 days respectively and must be used by June 30 of the following year, and any remainder beyond that converts to cash or is forfeited per policy."
+    ],
+    "docs": [
+      {
+        "title": "Total Rewards - Paid Time Off - Policy - Philippines (v4.0)",
+        "file": "/assets/raw/handbook/Total-Rewards-PTO-Policy-PH.pdf"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How much PTO does an employee accrue?",
+        "a": "Less than 5 years of service: 20 days/year (0.835 days semi-monthly). 5+ years of service: 30 days/year (1.25 days semi-monthly)."
+      }
+    ],
+    "learning": [],
+    "escalation_contact": "HRBP@RealPage.com",
+    "status": "ready",
+    "status_note": "Pulled directly from the source PDF's eligibility, responsibilities, accrual, and carry-over/cash-conversion sections. Philippines-only — no US/global equivalent found in the library."
+  },
+  "internal_transfer_request": {
+    "category": "Handbook & Policies",
+    "country": "Global",
+    "checkbox_tags": [
+      "internal_mobility",
+      "transfer",
+      "promotion_interest"
+    ],
+    "keywords": [
+      "internal transfer",
+      "wants to move teams",
+      "internal mobility",
+      "apply for another role",
+      "change roles internally",
+      "lateral move"
+    ],
+    "steps": [
+      "Respond with a supportive mindset — expressing interest in another role is not a request for permission, and it shouldn't be discouraged or held against the employee.",
+      "Understand the internal mobility process and loop in your HRBP for support throughout.",
+      "If they're selected for the new role: update their goals/notes in the HRIS system before the transition, agree a transition period with the hiring manager (consistent with any contractual notice period, which can vary by country), and build a transition plan together — don't put the employee in the middle of that discussion.",
+      "If they're not selected: confirm their current role is secure, reaffirm your commitment to their development, and keep having frequent career-development conversations.",
+      "Provide an honest, balanced performance assessment to the hiring manager, aligned with what you've already told the employee in past reviews."
+    ],
+    "docs": [
+      {
+        "title": "RealPage - Internal Mobility Policy",
+        "file": "/assets/raw/handbook/Internal-Mobility-Policy.pdf"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What counts as internal mobility?",
+        "a": "Promotions (IC to senior IC or to managerial), organization changes (moving departments), location changes, job changes (lateral moves), and contract changes (intern/temp or contractor to permanent employee)."
+      }
+    ],
+    "learning": [],
+    "escalation_contact": "HRBP@RealPage.com",
+    "status": "ready",
+    "status_note": "Pulled directly from the source PDF's Current Manager and Guidelines sections. This is a Global policy, so it applies regardless of country filter."
+  },
+  "performance_review_evaluation": {
+    "category": "Talent & Development",
+    "country": "Global",
+    "checkbox_tags": [
+      "performance_review",
+      "manager_evaluation",
+      "annual_review"
+    ],
+    "keywords": [
+      "performance review",
+      "annual review",
+      "manager evaluation",
+      "rate my employee",
+      "performance rating",
+      "mid-year check-in"
+    ],
+    "steps": [
+      "From the UKG Home Page, click the My Team tab, then Talent Dashboard, then My Direct Reports.",
+      "Find the employee and open their review.",
+      "If you need more information from them first, send the evaluation back to them before proceeding.",
+      "From Review Sections, complete each Goal: select a rating, add comments, then Save and Close.",
+      "Complete the Overall Performance Feedback section, save, then click Send to finish the review."
+    ],
+    "docs": [
+      {
+        "title": "Manager User Guide - Manager Assessment",
+        "file": "/assets/raw/talent-development/Manager-Assessment.pdf"
+      }
+    ],
+    "faqs": [],
+    "learning": [],
+    "escalation_contact": "LearningDevelopment@RealPage.com",
+    "status": "ready",
+    "status_note": "Pulled directly from the source PDF's step-by-step Manager Evaluation walkthrough in UKG. Global — no country-specific variant found."
+  },
+  "smart_goal_coaching": {
+    "category": "Talent & Development",
+    "country": "Global",
+    "checkbox_tags": [
+      "smart_goals",
+      "goal_coaching"
+    ],
+    "keywords": [
+      "smart goal",
+      "help writing goals",
+      "goal isn't specific enough",
+      "vague goal",
+      "coach on goals"
+    ],
+    "steps": [
+      "Check the goal against the SMART criteria: Specific, Measurable, Attainable, Relevant, Time bound.",
+      "Have them start the goal with an action verb (Increase, Complete, Attain, Achieve, Reduce).",
+      "Make sure it includes a measurement (how much, how many, how much better/faster) and a due date, time frame, or frequency.",
+      "Avoid all-or-nothing goals — suggest a range (e.g. \"95-100 percent\") instead of a single hard threshold.",
+      "Limit it to one to three goals per major job output so the overall plan stays realistic.",
+      "Sanity check: does this goal benefit the employee, the team, and the organization? If not, help them rewrite it."
+    ],
+    "docs": [
+      {
+        "title": "Making Performance Goals SMART (DDI)",
+        "file": "/assets/raw/talent-development/SMART-Goals-DDI.pdf"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What's an example of a SMART goal?",
+        "a": "\"Decrease shipping errors by 3-5 percent by the end of the third quarter\" — it has an action verb, a measurement, and a due date."
+      }
+    ],
+    "learning": [],
+    "escalation_contact": "LearningDevelopment@RealPage.com",
+    "status": "ready",
+    "status_note": "Pulled directly from the source DDI job aid's criteria, tips, and formula for SMART goals. Global — no country-specific variant found."
+  },
+  "leading_through_change": {
+    "category": "Talent & Development",
+    "country": "Global",
+    "checkbox_tags": [
+      "change_management",
+      "team_reorg",
+      "leading_change"
+    ],
+    "keywords": [
+      "leading through change",
+      "team reorg",
+      "change management",
+      "team is resisting change",
+      "announcing a change",
+      "reorganization"
+    ],
+    "steps": [
+      "Scope the change first: what's changing, why, when it needs to be done, who's impacted, and how it'll be implemented.",
+      "Use the three Change Accelerators when talking with your team: describe what's changing and why, seek their reactions and feelings, and help them find aspects of the change they can control or influence.",
+      "Expect the Emotional Cycle of Change (Uninformed Optimism to Informed Pessimism to Valley of Despair to Informed Optimism to Fulfillment) — the dip is normal, not a sign something's wrong.",
+      "Identify Change Champions, Change Agents, and Change Empaths on your team who can help others move through it.",
+      "Build a simple communication plan: what you're communicating, through what channel, and how often — and keep communicating even when there's no new update.",
+      "Partner with your HRBP for guidance specific to your team's situation."
+    ],
+    "docs": [
+      {
+        "title": "Change Management - Leader's Toolkit V2",
+        "file": "/assets/raw/talent-development/Change-Management-Toolkit.pdf"
+      }
+    ],
+    "faqs": [],
+    "learning": [],
+    "escalation_contact": "LearningDevelopment@RealPage.com",
+    "status": "ready",
+    "status_note": "Pulled directly from the source toolkit's Leader's Role, Change Accelerators, Change Curve, and Communication Plan sections. Global — no country-specific variant found."
+  },
+  "contractor_onboarding": {
+    "category": "Talent Services",
+    "country": "Global",
+    "checkbox_tags": [
+      "contractor_onboarding",
+      "contingent_worker",
+      "start_a_contractor"
+    ],
+    "keywords": [
+      "onboard a contractor",
+      "contingent worker",
+      "bring on a contractor",
+      "new contractor starting",
+      "consultant starting"
+    ],
+    "steps": [
+      "Before anything else, confirm a Purchase Order (PO) is in place — most business units require one before onboarding can proceed.",
+      "For US-based contractors, confirm a background check has been completed (initiate one in Sterling if not, and wait for results before proceeding).",
+      "Send the completed Onboarding Request Form to the Contingent Worker mailbox, and send the onboarding form to the contractor via DocuSign.",
+      "Once their profile is created, they'll receive a setup email automatically — access requests (computer, software, VPN) go through a New Hire (Manager) Onboarding ticket in Salesforce.",
+      "Note for later: to end the engagement, email ContingentWorker@realpage.com. You'll get an expiration notice before the contract end date — if no action is taken, reactivation becomes your responsibility."
+    ],
+    "docs": [
+      {
+        "title": "Contractor Onboarding Process",
+        "file": "/assets/raw/talent-services/Contractor-Onboarding-Process.pdf"
+      }
+    ],
+    "faqs": [],
+    "learning": [],
+    "escalation_contact": "ContingentWorker@RealPage.com",
+    "status": "ready",
+    "status_note": "Pulled directly from the source PDF's manager-facing steps (PO/background-check prerequisites, submission, and post-onboarding reminders) — the document's detailed UKG data-entry steps are for the HR ops team, not managers, and were left out. Global — no country-specific variant found."
   }
 }
