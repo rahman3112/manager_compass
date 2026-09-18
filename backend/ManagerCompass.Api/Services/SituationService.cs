@@ -173,7 +173,15 @@ namespace ManagerCompass.Api.Services
         public SituationService(IWebHostEnvironment env)
         {
             var basePath = Path.Combine(env.ContentRootPath, "Assets", "processed");
-            var opts = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            // situations.json/contacts.json use snake_case keys (e.g. "escalation_contact",
+            // "category_contact") that PropertyNameCaseInsensitive alone can't match to the
+            // PascalCase C# properties above — without this, those fields silently deserialize
+            // as null and every guide/no-guide result falls back to the generic "your HRBP".
+            var opts = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+            };
 
             _situations = JsonSerializer.Deserialize<Dictionary<string, RawSituation>>(
                 File.ReadAllText(Path.Combine(basePath, "situations.json")), opts) ?? new();
